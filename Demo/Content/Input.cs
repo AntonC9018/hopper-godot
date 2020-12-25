@@ -10,7 +10,6 @@ namespace Hopper
 {
     public class InputManager
     {
-
         private static Dictionary<uint, InputMapping> InputMap = new Dictionary<uint, InputMapping> {
             { (uint)KeyList.Space, InputMapping.Weapon_0 },
             { (uint)KeyList.X, InputMapping.Weapon_1 },
@@ -22,16 +21,10 @@ namespace Hopper
             { (uint)KeyList.Right, IntVector2.Right },
         };
 
-        public bool TrySetAction(Hopper.Core.World world, InputEvent _event)
+        public bool TrySetAction(Hopper.Core.World world, InputEventKey eventKey)
         {
-            if (!(_event is InputEventKey))
-            {
-                return false;
-            }
-            var eventKey = (InputEventKey)_event;
             if (eventKey.Pressed
-                && (VectorMapping.ContainsKey(eventKey.Scancode)
-                || InputMap.ContainsKey(eventKey.Scancode)))
+                && (VectorMapping.ContainsKey(eventKey.Scancode) || InputMap.ContainsKey(eventKey.Scancode)))
             {
                 foreach (var player in world.State.Players)
                 {

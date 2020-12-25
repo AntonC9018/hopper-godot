@@ -17,38 +17,21 @@ using Hopper.Controller;
 using Hopper.Test_Content.Bind;
 using Hopper.Test_Content.Status.Freezing;
 using Godot.Collections;
+using Hopper.View;
 
 namespace Hopper
 {
     public class Demo : Godot.Node
     {
-        // public GameObject playerPrefab;
-        // public GameObject enemyPrefab;
-        // public GameObject wallPrefab;
-        // public GameObject tilePrefab;
-        // public GameObject chestPrefab;
-        // public GameObject droppedItemPrefab;
-        // public GameObject bombPrefab;
-        // public GameObject explosionPrefab;
-        // public GameObject waterPrefab;
-        // public GameObject icePrefab;
-        // public GameObject bounceTrapPrefab;
-        // public GameObject barrierPrefab;
-        // public GameObject knipperPrefab;
-        // public GameObject testBossPrefab;
-        // public GameObject whelpPrefab;
-        // public GameObject laserBeamHeadPrefab;
-        // public GameObject laserBeamBodyPrefab;
-
-        // public GameObject defaultPrefab;
-
+        private Nodes m_nodes;
         private World m_world;
         private ViewController m_controller;
         private InputManager m_inputManager;
 
         public override void _Input(Godot.InputEvent _event)
         {
-            if (m_inputManager.TrySetAction(m_world, _event))
+            if (_event is Godot.InputEventKey
+                && m_inputManager.TrySetAction(m_world, (Godot.InputEventKey)_event))
             {
                 m_world.Loop();
             }
@@ -56,6 +39,7 @@ namespace Hopper
 
         public override void _Ready()
         {
+            m_nodes = new Nodes(this);
             m_inputManager = new InputManager();
 
             var modLoader = new ModLoader();
@@ -84,7 +68,7 @@ namespace Hopper
                 {
                     if (generator.grid[x, y] != Generator.Mark.EMPTY)
                     {
-                        // TileStuff.CreatedEventPath.Fire(m_world, new IntVector2(x, y));
+                        TileStuff.CreatedEventPath.Fire(m_world, new IntVector2(x, y));
 
                         if (generator.grid[x, y] == Generator.Mark.WALL)
                         {
@@ -184,52 +168,54 @@ namespace Hopper
 
         private void SetupViewModel(DemoMod demoMod, World world)
         {
-            // var destroyOnDeathSieve = new SimpleSieve(AnimationCode.Destroy, UpdateCode.dead);
-            // var playerJumpSieve = new SimpleSieve(AnimationCode.Jump, UpdateCode.move_do);
+            var destroyOnDeathSieve = new SimpleSieve(AnimationCode.Destroy, UpdateCode.dead);
+            var playerJumpSieve = new SimpleSieve(AnimationCode.Jump, UpdateCode.move_do);
 
-            // View.Timer timer = gameObject.AddComponent<View.Timer>();
-            // var animator = new ViewAnimator(new SceneEnt(Camera.main.gameObject), timer);
+            var timer = GetNode<View.Timer>(new Godot.NodePath("Timer"));
+            var camera = GetNode<Godot.Node2D>(new Godot.NodePath("Camera_Container"));
+            var animator = new ViewAnimator(new SceneEnt(camera), timer);
 
-            // m_controller = new ViewController(animator);
-            // m_controller.SetDefaultModel(new Model<SceneEnt>(defaultPrefab, destroyOnDeathSieve));
+            m_controller = new ViewController(animator);
+            m_controller.SetDefaultModel(new Model<SceneEnt>(m_nodes._default, destroyOnDeathSieve));
 
-            // m_controller.SetModelForFactory(demoMod.PlayerFactory.Id,
-            //     new Model<SceneEnt>(playerPrefab, destroyOnDeathSieve, playerJumpSieve));
-            // m_controller.SetModelForFactory(demoMod.WallFactory.Id,
-            //     new Model<SceneEnt>(wallPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(demoMod.ChestFactory.Id,
-            //     new Model<SceneEnt>(chestPrefab, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(demoMod.PlayerFactory.Id,
+                new Model<SceneEnt>(m_nodes.player, destroyOnDeathSieve, playerJumpSieve));
+            m_controller.SetModelForFactory(demoMod.WallFactory.Id,
+                new Model<SceneEnt>(m_nodes.wall, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(demoMod.ChestFactory.Id,
+                new Model<SceneEnt>(m_nodes.chest, destroyOnDeathSieve));
 
-            // m_controller.SetModelForFactory(Skeleton.Factory.Id,
-            //     new Model<SceneEnt>(enemyPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(BombEntity.Factory.Id,
-            //     new Model<SceneEnt>(bombPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(DroppedItem.Factory.Id,
-            //     new Model<RegularRotationSceneEnt>(droppedItemPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(Water.Factory.Id,
-            //     new Model<SceneEnt>(waterPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(IceFloor.Factory.Id,
-            //     new Model<SceneEnt>(icePrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(BounceTrap.Factory.Id,
-            //     new Model<SceneEnt>(bounceTrapPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(Barrier.Factory.Id,
-            //     new Model<RegularRotationSceneEnt>(barrierPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(RealBarrier.Factory.Id,
-            //     new Model<RegularRotationSceneEnt>(barrierPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(Knipper.Factory.Id,
-            //     new Model<SceneEnt>(knipperPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(TestBoss.Factory.Id,
-            //     new Model<SceneEnt>(testBossPrefab, destroyOnDeathSieve));
-            // m_controller.SetModelForFactory(TestBoss.Whelp.Factory.Id,
-            //     new Model<SceneEnt>(whelpPrefab, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(Skeleton.Factory.Id,
+                new Model<SceneEnt>(m_nodes.enemy, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(BombEntity.Factory.Id,
+                new Model<SceneEnt>(m_nodes.bomb, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(DroppedItem.Factory.Id,
+                new Model<RegularRotationSceneEnt>(m_nodes.droppedItem, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(Water.Factory.Id,
+                new Model<SceneEnt>(m_nodes.water, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(IceFloor.Factory.Id,
+                new Model<SceneEnt>(m_nodes.ice, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(BounceTrap.Factory.Id,
+                new Model<SceneEnt>(m_nodes.bounceTrap, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(Barrier.Factory.Id,
+                new Model<RegularRotationSceneEnt>(m_nodes.barrier, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(RealBarrier.Factory.Id,
+                new Model<RegularRotationSceneEnt>(m_nodes.barrier, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(Knipper.Factory.Id,
+                new Model<SceneEnt>(m_nodes.knipper, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(TestBoss.Factory.Id,
+                new Model<SceneEnt>(m_nodes.testBoss, destroyOnDeathSieve));
+            m_controller.SetModelForFactory(TestBoss.Whelp.Factory.Id,
+                new Model<SceneEnt>(m_nodes.whelp, destroyOnDeathSieve));
 
-            // var explosionWatcher = new ExplosionWatcher(explosionPrefab);
-            // var laserBeamWatcher = new LaserBeamWatcher(laserBeamHeadPrefab, laserBeamBodyPrefab);
-            // var tileWatcher = new TileWatcher(new Model<SceneEnt>(tilePrefab));
+            var explosionWatcher = new ExplosionWatcher(m_nodes.explosion);
+            var laserBeamWatcher = new LaserBeamWatcher(m_nodes.laserBeamHead, m_nodes.laserBeamBody);
+            var tileWatcher = new TileWatcher(new Model<SceneEnt>(m_nodes.tile));
 
-            // Reference.Width = playerPrefab.GetComponent<SpriteRenderer>().size.x;
+            Reference.Width = ((Godot.Sprite)m_nodes.player).Texture.GetWidth();
+            System.Console.WriteLine(Reference.Width);
 
-            // m_controller.WatchWorld(world, explosionWatcher, tileWatcher, laserBeamWatcher);
+            m_controller.WatchWorld(world, explosionWatcher, tileWatcher, laserBeamWatcher);
         }
 
         private Generator CreateRunGenerator()

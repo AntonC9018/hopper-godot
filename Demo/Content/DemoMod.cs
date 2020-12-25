@@ -6,7 +6,7 @@ using Hopper.Core.Registries;
 using Hopper.Core.Retouchers;
 using Hopper.Core.Targeting;
 using Hopper.Utils.Vector;
-// using Hopper.View;
+using Hopper.View;
 
 namespace Hopper
 {
@@ -118,7 +118,7 @@ namespace Hopper
             ChestFactory.RegisterSelf(registry);
             WallFactory.RegisterSelf(registry);
 
-            // TileStuff.CreatedEventPath.Event.RegisterSelf(registry);
+            TileStuff.CreatedEventPath.Event.RegisterSelf(registry);
         }
 
         public void PrePatch(PatchArea patchArea)
@@ -127,7 +127,7 @@ namespace Hopper
 
         public void Patch(PatchArea patchArea)
         {
-            // TileStuff.CreatedEventPath.Event.Patch(patchArea);
+            TileStuff.CreatedEventPath.Event.Patch(patchArea);
         }
 
         public void PostPatch(PatchArea patchArea)
