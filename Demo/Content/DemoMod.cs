@@ -108,7 +108,9 @@ namespace Hopper
                 new PoolItemContentSpec("zone1/stuff")
             ));
 
-            WallFactory = new EntityFactory<Wall>().AddBehavior(Damageable.Preset);
+            WallFactory = new EntityFactory<Wall>()
+                // .AddBehavior(Attackable.Preset(Attackness.NEVER))
+                .AddBehavior(Damageable.Preset);
 
             ShovelItem.RegisterSelf(registry);
             KnifeItem.RegisterSelf(registry);

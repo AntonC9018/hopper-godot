@@ -72,7 +72,7 @@ namespace Hopper
 
                         if (generator.grid[x, y] == Generator.Mark.WALL)
                         {
-                            // m_world.SpawnEntity(m_factories.wallFactory, new IntVector2(x, y));
+                            m_world.SpawnEntity(demoMod.WallFactory, new IntVector2(x, y));
                         }
                     }
                 }
