@@ -14,3 +14,11 @@ cd hopper-godot
 git clone http://github.com/AntonC9018/hopper.cs Hopper
 rm Hopper/*/*.csproj
 ```
+
+
+To get the latest model code, do:
+```
+cd Hopper
+git pull origin master
+rm */*.csproj
+```
