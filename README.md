@@ -1,3 +1,4 @@
+# Getting Started
 1. Install Godot.
 2. Clone this repo somewhere
 ```
