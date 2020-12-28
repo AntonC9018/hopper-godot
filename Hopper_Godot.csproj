@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json"> 
-        <HintPath>..\Hopper\Newtonsoft.Json.dll</HintPath>
+        <HintPath>Hopper\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
