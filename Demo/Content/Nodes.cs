@@ -32,7 +32,7 @@ namespace Hopper
             bomb = parent.GetNode<Godot.Node2D>(new Godot.NodePath("bomb"));
             explosion = parent.GetNode<Godot.Node2D>(new Godot.NodePath("explosion"));
             water = parent.GetNode<Godot.Node2D>(new Godot.NodePath("WaterTile"));
-            ice = parent.GetNode<Godot.Node2D>(new Godot.NodePath("tile"));
+            ice = parent.GetNode<Godot.Node2D>(new Godot.NodePath("default"));
             bounceTrap = parent.GetNode<Godot.Node2D>(new Godot.NodePath("trap"));
             barrier = parent.GetNode<Godot.Node2D>(new Godot.NodePath("side_power_wall"));
             knipper = parent.GetNode<Godot.Node2D>(new Godot.NodePath("knipper"));

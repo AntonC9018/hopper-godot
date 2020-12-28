@@ -31,7 +31,7 @@ namespace Hopper
         public override void _Input(Godot.InputEvent _event)
         {
             if (_event is Godot.InputEventKey
-                && m_inputManager.TrySetAction(m_world, (Godot.InputEventKey)_event))
+                && m_inputManager.TrySetActionForAllPlayers(m_world, (Godot.InputEventKey)_event))
             {
                 m_world.Loop();
             }
@@ -83,7 +83,7 @@ namespace Hopper
             var player = m_world.SpawnPlayer(demoMod.PlayerFactory, center);
 
             /* Spider binds you in place */
-            m_world.SpawnEntity(Spider.Factory, center + IntVector2.Right, new IntVector2(1, 1));
+            // m_world.SpawnEntity(Spider.Factory, center + IntVector2.Right, new IntVector2(1, 1));
 
             /* Bounce trap and a wall. */
             // m_world.SpawnEntity(BounceTrap.Factory, center + IntVector2.Right, IntVector2.Right);

@@ -21,25 +21,40 @@ namespace Hopper
             { (uint)KeyList.Right, IntVector2.Right },
         };
 
-        public bool TrySetAction(Hopper.Core.World world, InputEventKey eventKey)
+        public bool TrySetActionForAllPlayers(Hopper.Core.World world, InputEventKey eventKey)
         {
-            if (eventKey.Pressed
-                && (VectorMapping.ContainsKey(eventKey.Scancode) || InputMap.ContainsKey(eventKey.Scancode)))
+            if (IsInputValid(eventKey))
             {
                 foreach (var player in world.State.Players)
                 {
-                    Action action;
-                    var input = player.Behaviors.Get<Controllable>();
-                    if (InputMap.ContainsKey(eventKey.Scancode))
-                    {
-                        action = input.ConvertInputToAction(InputMap[eventKey.Scancode]);
-                    }
-                    else
-                    {
-                        action = input.ConvertVectorToAction(VectorMapping[eventKey.Scancode]);
-                    }
-                    player.Behaviors.Get<Acting>().NextAction = action;
+                    SetActionForPlayer(world, eventKey, player);
                 }
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsInputValid(InputEventKey eventKey)
+        {
+            return eventKey.Pressed
+                && (VectorMapping.ContainsKey(eventKey.Scancode) || InputMap.ContainsKey(eventKey.Scancode));
+        }
+
+        public void SetActionForPlayer(Hopper.Core.World world, InputEventKey eventKey, Entity player)
+        {
+            var input = player.Behaviors.Get<Controllable>();
+
+            player.Behaviors.Get<Acting>().NextAction =
+                InputMap.ContainsKey(eventKey.Scancode)
+                    ? input.ConvertInputToAction(InputMap[eventKey.Scancode])
+                    : input.ConvertVectorToAction(VectorMapping[eventKey.Scancode]);
+        }
+
+        public bool TrySetActionForPlayer(Hopper.Core.World world, InputEventKey eventKey, Entity player)
+        {
+            if (IsInputValid(eventKey))
+            {
+                SetActionForPlayer(world, eventKey, player);
                 return true;
             }
             return false;
