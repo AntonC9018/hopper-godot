@@ -39,7 +39,7 @@ namespace Hopper
 
         public override void _Ready()
         {
-            // Nodes is a godot specific concept. They represent scene entity models in this case. 
+            // Nodes is a godot-specific concept. They represent scene entity models in this case. 
             m_nodes = new Nodes(this);
             // Converts user input to action and sets it, for each player.
             m_inputManager = new InputManager();
@@ -95,7 +95,7 @@ namespace Hopper
                 }
             }
 
-            // Rooms[0] is the room in the middle.
+            // Rooms[0] is the starting room, which all other rooms branch out from.
             IntVector2 center = generator.rooms[0].Center.Round();
 
             // Players are handled differently. If you are creating a player, not just any entity, 
