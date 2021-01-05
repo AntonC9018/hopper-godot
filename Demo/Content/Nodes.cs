@@ -22,6 +22,7 @@ namespace Hopper
         public Node2D whelp;
         public Node2D laserBeamHead;
         public Node2D laserBeamBody;
+        public Node2D danger;
         public Node2D _default;
 
         private Node parent;
@@ -53,6 +54,7 @@ namespace Hopper
             whelp = GetNode("whelp");
             laserBeamHead = GetNode("beam");
             laserBeamBody = GetNode("beam");
+            danger = GetNode("danger");
             _default = GetNode("default");
         }
 

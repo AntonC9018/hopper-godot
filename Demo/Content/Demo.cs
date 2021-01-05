@@ -39,11 +39,6 @@ namespace Hopper
 
         public override void _Ready()
         {
-            // Nodes is a godot-specific concept. They represent scene entity models in this case. 
-            m_nodes = new Nodes(this);
-            // Converts user input to action and sets it, for each player.
-            m_inputManager = new InputManager();
-
             // The mod loader automatically loads the base mod, which adds most basic stuff
             var modLoader = new ModLoader();
             // The test mod defines some additional content: some status effects, some mobs, bows etc.
@@ -165,7 +160,10 @@ namespace Hopper
             // m_world.SpawnEntity(IceFloor.Factory, new IntVector2(center.x + 1, center.y - 1));
 
             /* Apply freezing on player. */
-            Freeze.Status.TryApply(player, new FreezeData(), Freeze.Path.defaultFile);
+            // Freeze.Status.TryApply(player, new FreezeData(), Freeze.Path.defaultFile);
+
+            /* Spawn a simple enemy */
+            m_world.SpawnEntity(Skeleton.Factory, new IntVector2(center.x + 1, center.y - 1));
         }
 
         private ISuperPool CreateItemPool(DemoMod mod)
@@ -191,6 +189,11 @@ namespace Hopper
 
         private void SetupViewModel(DemoMod demoMod, World world)
         {
+            // Nodes is a godot-specific concept. They represent scene entity models in this case. 
+            m_nodes = new Nodes(this);
+            // Converts user input to action and sets it, for each player.
+            m_inputManager = new InputManager();
+
             var destroyOnDeathSieve = new SimpleSieve(AnimationCode.Destroy, UpdateCode.dead);
             var playerJumpSieve = new SimpleSieve(AnimationCode.Jump, UpdateCode.move_do);
 
@@ -236,11 +239,11 @@ namespace Hopper
             var explosionWatcher = new ExplosionWatcher(m_nodes.explosion);
             var laserBeamWatcher = new LaserBeamWatcher(m_nodes.laserBeamHead, m_nodes.laserBeamBody);
             var tileWatcher = new TileWatcher(new Model<SceneEnt>(m_nodes.tile));
+            var predictionWatcher = new PredictionsWatcher(m_nodes.danger);
 
             Reference.Width = ((Godot.Sprite)m_nodes.player).Texture.GetWidth();
-            System.Console.WriteLine(Reference.Width);
 
-            m_controller.WatchWorld(world, explosionWatcher, tileWatcher, laserBeamWatcher);
+            m_controller.WatchWorld(world, explosionWatcher, tileWatcher, laserBeamWatcher, predictionWatcher);
         }
 
         private Generator CreateRunGenerator()

@@ -52,6 +52,18 @@ namespace Hopper.View
             m_node.GetParent().RemoveChild(m_node);
         }
 
+        public void Hide()
+        {
+            m_ignoreUpdates = true;
+            m_node.Visible = false;
+        }
+
+        public void Show()
+        {
+            m_ignoreUpdates = false;
+            m_node.Visible = true;
+        }
+
         public void EnterPhase(
             Hopper.Core.History.EntityState finalState, ISieve sieve, Controller.AnimationInfo animationInfo)
         {
