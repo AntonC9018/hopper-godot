@@ -73,13 +73,13 @@ namespace Hopper
 
         private EntityFactory<Player> CreatePlayerFactory()
         {
-            var moveAction = new BehaviorAction<Moving>();
-            var digAction = new BehaviorAction<Digging>();
-            var attackAction = new BehaviorAction<Attacking>();
-            var interactAction = new SimpleAction(
-                (Entity actor, Action action) =>
+            var moveAction = Action.CreateBehavioral<Moving>();
+            var digAction = Action.CreateBehavioral<Digging>();
+            var attackAction = Action.CreateBehavioral<Attacking>();
+            var interactAction = Action.CreateSimple(
+                (Entity actor, IntVector2 direction) =>
                 {
-                    var target = actor.GetCellRelative(action.direction)?.GetAnyEntityFromLayer(Layer.REAL);
+                    var target = actor.GetCellRelative(direction)?.GetAnyEntityFromLayer(Layer.REAL);
                     if (target == null) return false;
                     var interactable = target.Behaviors.TryGet<Interactable>();
                     if (interactable == null) return false;
@@ -87,7 +87,7 @@ namespace Hopper
                 }
             );
 
-            var defaultAction = new CompositeAction(
+            var defaultAction = Action.CreateCompositeDirected(
                 interactAction,
                 attackAction,
                 digAction,
