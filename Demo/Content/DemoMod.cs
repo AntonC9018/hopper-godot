@@ -65,10 +65,6 @@ namespace Hopper
                     Handlers.DefaultAtkChain
                 )
             );
-
-
-            // Reference this item once so that it is added to the registry
-            // var _ = Bow.DefaultItem;
         }
 
         private EntityFactory<Player> CreatePlayerFactory()

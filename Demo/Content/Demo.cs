@@ -10,7 +10,6 @@ using Hopper.Test_Content.Explosion;
 using Hopper.Test_Content.Floor;
 using Hopper.Test_Content.SimpleMobs;
 using Hopper.Test_Content.Status;
-using Hopper.Test_Content.Trap;
 using Hopper.Utils.Vector;
 
 using Hopper.Controller;
@@ -187,6 +186,23 @@ namespace Hopper
             // return pool.Copy();
         }
 
+        private Generator CreateRunGenerator()
+        {
+            Generator generator = new Generator(11, 11, new Generator.Options
+            {
+                min_hallway_length = 2,
+                max_hallway_length = 5
+            });
+
+            generator.AddRoom(new IntVector2(10, 10));
+            // generator.AddRoom(new IntVector2(5, 5));
+            // generator.AddRoom(new IntVector2(5, 5));
+            // generator.AddRoom(new IntVector2(5, 5));
+            // generator.AddRoom(new IntVector2(5, 5));
+            generator.Generate();
+            return generator;
+        }
+
         private void SetupViewModel(DemoMod demoMod, World world)
         {
             // Nodes is a godot-specific concept. They represent scene entity models in this case. 
@@ -244,23 +260,6 @@ namespace Hopper
             Reference.Width = ((Godot.Sprite)m_nodes.player).Texture.GetWidth();
 
             m_controller.WatchWorld(world, explosionWatcher, tileWatcher, laserBeamWatcher, predictionWatcher);
-        }
-
-        private Generator CreateRunGenerator()
-        {
-            Generator generator = new Generator(11, 11, new Generator.Options
-            {
-                min_hallway_length = 2,
-                max_hallway_length = 5
-            });
-
-            generator.AddRoom(new IntVector2(10, 10));
-            // generator.AddRoom(new IntVector2(5, 5));
-            // generator.AddRoom(new IntVector2(5, 5));
-            // generator.AddRoom(new IntVector2(5, 5));
-            // generator.AddRoom(new IntVector2(5, 5));
-            generator.Generate();
-            return generator;
         }
     }
 }
