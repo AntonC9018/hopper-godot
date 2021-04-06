@@ -1,0 +1,3 @@
+[submodule "Hopper"]
+	path = Hopper
+	url = http://github.com/AntonC9018/hopper.cs.git
