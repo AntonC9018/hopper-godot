@@ -3,4 +3,14 @@
 For an overview of the project, see [this repo](https://github.com/AntonC9018/hopper.cs).
 
 ## Getting Started
-You no longer need to download the hopper.cs repo separately, now it is included as a submodule to this repository.
+1. Install Godot. Newest version works.
+2. Either clone this repo somewhere with submodule init:
+```
+git clone http://github.com/AntonC9018/hopper-godot hopper-godot --recursive
+```
+
+Or clone this repo via the github app (thus non-recursively), then manually initialize the submodules
+
+```
+git submodule update --init
+```
