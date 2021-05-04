@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://View/Testing/SwitchSpriteOnInput.cs" type="Script" id=1]
+[ext_resource path="res://Images/Enemies/zombie.png" type="Texture" id=2]
+
+[node name="Enemy" type="Node2D"]
+position = Vector2( 91.4365, 66.0746 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 5, 5 )
+texture = ExtResource( 2 )
