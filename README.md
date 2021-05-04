@@ -4,18 +4,13 @@ For an overview of the project, see [this repo](https://github.com/AntonC9018/ho
 
 ## Getting Started
 1. Install Godot. Newest version works.
-2. Clone this repo somewhere.
+2. Either clone this repo somewhere with submodule init:
 ```
-git clone http://github.com/AntonC9018/hopper-godot hopper-godot
-cd hopper-godot
-```
-3. Run the following commands to get the model code. 
-```
-git clone http://github.com/AntonC9018/hopper.cs Hopper
+git clone http://github.com/AntonC9018/hopper-godot hopper-godot --recursive
 ```
 
-To update the model code, run:
+Or clone this repo via the github app (thus non-recursively), then manually initialize the submodules
+
 ```
-cd Hopper
-git pull origin master
+git submodule update --init
 ```
