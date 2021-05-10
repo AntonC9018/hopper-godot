@@ -1,6 +1,7 @@
-﻿using System;
-using Godot;
+﻿using Godot;
 using System.Diagnostics;
+
+//TODO: mirror entity based on direction
 
 namespace Hopper_Godot.View
 {
@@ -83,7 +84,7 @@ namespace Hopper_Godot.View
             }
         }
 
-        private void StopMovement()
+        public void StopMovement()
         {
             animStopwatch.Stop();
             animStopwatch.Reset();

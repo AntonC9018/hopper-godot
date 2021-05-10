@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Godot;
 
+//TODO: mirror sprite based on attack direction
+
 namespace Hopper_Godot.View
 {
     public abstract class AttackAnim : Node2D
@@ -46,7 +48,7 @@ namespace Hopper_Godot.View
             slashSprite.SelfModulate = new Color(1, 1, 1, Helper.SquareInterpolation(Peak, Duration, time));
         }
 
-        private void StopAttack()
+        public void StopAttack()
         {
             animStopwatch.Stop();
             animStopwatch.Reset();
