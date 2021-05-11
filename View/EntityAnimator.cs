@@ -1,4 +1,5 @@
 ﻿using Godot;
+using Hopper.Core.Retouchers;
 
 namespace Hopper_Godot.View
 {
@@ -10,6 +11,8 @@ namespace Hopper_Godot.View
 
         private MovementAnim movementAnim;
         private AttackAnim attackAnim;
+        private GetHitAnim getHitAnim;
+        
         private Vector2 actualPosition;
         
         public void SetAllLinks()
@@ -22,12 +25,16 @@ namespace Hopper_Godot.View
 
             attackAnim = (AttackAnim) GetNode("AttackAnim");
             attackAnim.SetSlashSprite(slashSprite);
+            
+            getHitAnim = (GetHitAnim) GetNode("GetHitAnim");
+            getHitAnim.SetEntitySprite(entitySprite);
         }
         
         public void SkipAnimations()
         {
             movementAnim.StopMovement();
             attackAnim.StopAttack();
+            getHitAnim.StopAnim();
         }
 
         public void Move(Vector2 destination, MovementAnim.EMovementType movementType)
@@ -52,6 +59,12 @@ namespace Hopper_Godot.View
             SkipAnimations();
             entitySprite.Texture = entitySpriteSet.IdleTexture;
             attackAnim.StartAttack(targetPos);
+        }
+
+        public void GetHit()
+        {
+            SkipAnimations();
+            getHitAnim.StartAttack();
         }
 
         public void DeleteEntity()
