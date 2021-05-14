@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 using System.Diagnostics;
 
 //TODO: mirror entity based on direction
@@ -23,9 +24,10 @@ namespace Hopper_Godot.View
         private EMovementType eMovementType;
 
         public static float Duration = 0.33f;
-        public static float Peak = 25f;
+        public static float Peak = -25f;
+        public bool isLookingRight = true;
 
-        public void SetSpriteNode(Node2D spriteNode)
+        public void SetEntitySprite(Node2D spriteNode)
         {
             this.spriteNode = spriteNode;
         }
@@ -40,6 +42,17 @@ namespace Hopper_Godot.View
         {
             startPos = spriteNode.Position = source; 
             destPos = eMovementType == EMovementType.Jump ? source : destination;    // set destination equal to source if jumping
+
+            if (eMovementType != EMovementType.Jump && Mathf.Abs(destPos.x - startPos.x) > 10)
+            {
+                isLookingRight = spriteNode.Scale.x > 0;
+
+                bool isMovingRight = destPos.x - startPos.x > 0;
+
+                if (isLookingRight != isMovingRight)
+                    FlipEntity();
+            }
+            
             this.eMovementType = eMovementType;
             isRunning = true;
             
@@ -90,6 +103,31 @@ namespace Hopper_Godot.View
             animStopwatch.Reset();
             isRunning = false;
             spriteNode.Position = destPos;
+        }
+
+        public void FlipEntity()
+        {
+            spriteNode.Scale = new Vector2(-spriteNode.Scale.x, spriteNode.Scale.y);
+            isLookingRight = !isLookingRight;
+        }
+
+        public void LookAt(bool lookRight)
+        {
+            if (isLookingRight != lookRight)
+                FlipEntity();
+        }
+
+        public new void LookAt(Vector2 direction)
+        {
+            LookAt(GetRelativeDirection(direction));
+        }
+
+        public bool GetRelativeDirection(Vector2 direction)
+        {
+            if (Math.Abs(direction.x - spriteNode.Position.x) < 10f)
+                return isLookingRight;
+            
+            return direction.x - spriteNode.Position.x > 0;
         }
     }
 }

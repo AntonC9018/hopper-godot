@@ -10,7 +10,7 @@
 [node name="Enemy" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="EnemySprite" type="Sprite" parent="."]
+[node name="EntitySprite" type="Sprite" parent="."]
 position = Vector2( -0.667419, 0 )
 scale = Vector2( 5, 5 )
 texture = ExtResource( 2 )
