@@ -13,7 +13,7 @@ namespace Hopper_Godot.View
                 (Texture)GD.Load("res://Images/Enemies/zombie.png"),
                 (Texture)GD.Load("res://Images/Enemies/zombie_a.png"),
                 (Texture)GD.Load("res://Images/Enemies/zombie_s.png")
-                );
+            );
             // ZombieIdle = (Texture)GD.Load("res://Images/Enemies/zombie.png");
             // ZombieTelegraph = (Texture)GD.Load("res://Images/Enemies/zombie_a.png");
         }
