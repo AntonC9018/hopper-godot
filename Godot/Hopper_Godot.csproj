@@ -1,0 +1,11 @@
+<Project Sdk="Godot.NET.Sdk/3.2.3">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>Hopper_Godot</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hopper\Core\Hopper.Core.csproj" />
+    <ProjectReference Include="..\Hopper\TestContent\Hopper.TestContent.csproj" />
+  </ItemGroup>
+</Project>

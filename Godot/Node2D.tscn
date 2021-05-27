@@ -1,0 +1,184 @@
+[gd_scene load_steps=29 format=2]
+
+[ext_resource path="res://Images/bomb.png" type="Texture" id=2]
+[ext_resource path="res://Images/candace4.png" type="Texture" id=3]
+[ext_resource path="res://Images/beam.png" type="Texture" id=4]
+[ext_resource path="res://Images/beamx2.png" type="Texture" id=5]
+[ext_resource path="res://Images/chest.png" type="Texture" id=6]
+[ext_resource path="res://Images/enemy.png" type="Texture" id=7]
+[ext_resource path="res://Images/droppedtestitem.png" type="Texture" id=8]
+[ext_resource path="res://Images/dirt.png" type="Texture" id=9]
+[ext_resource path="res://Images/default.png" type="Texture" id=10]
+[ext_resource path="res://Images/crate.png" type="Texture" id=11]
+[ext_resource path="res://Images/candace5.png" type="Texture" id=12]
+[ext_resource path="res://Images/explosion.png" type="Texture" id=13]
+[ext_resource path="res://Images/whelp.png" type="Texture" id=14]
+[ext_resource path="res://Images/head.png" type="Texture" id=15]
+[ext_resource path="res://Images/icecube.png" type="Texture" id=16]
+[ext_resource path="res://Images/joe.png" type="Texture" id=17]
+[ext_resource path="res://Images/knipper.png" type="Texture" id=18]
+[ext_resource path="res://Images/legot.png" type="Texture" id=19]
+[ext_resource path="res://Images/player.png" type="Texture" id=20]
+[ext_resource path="res://Images/projectile.png" type="Texture" id=21]
+[ext_resource path="res://Images/side_power_wall.png" type="Texture" id=22]
+[ext_resource path="res://Images/spider.png" type="Texture" id=23]
+[ext_resource path="res://Images/testboss.png" type="Texture" id=24]
+[ext_resource path="res://Images/Tile2.png" type="Texture" id=25]
+[ext_resource path="res://Images/tile.png" type="Texture" id=26]
+[ext_resource path="res://Images/trap.png" type="Texture" id=27]
+[ext_resource path="res://Images/WaterTile.png" type="Texture" id=28]
+[ext_resource path="res://Images/cross.png" type="Texture" id=30]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="beam" type="Sprite" parent="."]
+visible = false
+z_index = 30
+texture = ExtResource( 4 )
+
+[node name="beamx2" type="Sprite" parent="."]
+visible = false
+z_index = 30
+texture = ExtResource( 5 )
+
+[node name="bomb" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 2 )
+
+[node name="candace4" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 3 )
+
+[node name="candace5" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 12 )
+
+[node name="chest" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 6 )
+
+[node name="crate" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 11 )
+
+[node name="default" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 10 )
+
+[node name="dirt" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 9 )
+
+[node name="droppedtestitem" type="Sprite" parent="."]
+visible = false
+z_index = 14
+texture = ExtResource( 8 )
+
+[node name="enemy" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 7 )
+
+[node name="explosion" type="Sprite" parent="."]
+visible = false
+z_index = 30
+texture = ExtResource( 13 )
+
+[node name="head" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 15 )
+
+[node name="icecube" type="Sprite" parent="."]
+visible = false
+z_index = 30
+texture = ExtResource( 16 )
+
+[node name="icefloor" type="Sprite" parent="."]
+visible = false
+z_index = 10
+texture = ExtResource( 16 )
+
+[node name="joe" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 17 )
+
+[node name="knipper" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 18 )
+
+[node name="legot" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 19 )
+
+[node name="player" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 20 )
+
+[node name="projectile" type="Sprite" parent="."]
+visible = false
+z_index = 12
+texture = ExtResource( 21 )
+
+[node name="side_power_wall" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 22 )
+
+[node name="spider" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 23 )
+
+[node name="testboss" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 24 )
+
+[node name="Tile2" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 25 )
+
+[node name="tile" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 26 )
+
+[node name="trap" type="Sprite" parent="."]
+visible = false
+z_index = 11
+texture = ExtResource( 27 )
+
+[node name="WaterTile" type="Sprite" parent="."]
+visible = false
+z_index = 10
+texture = ExtResource( 28 )
+
+[node name="whelp" type="Sprite" parent="."]
+visible = false
+z_index = 20
+texture = ExtResource( 14 )
+
+[node name="danger" type="Sprite" parent="."]
+visible = false
+z_index = 15
+texture = ExtResource( 30 )
+
+[node name="Timer" type="Node" parent="."]
+
+[node name="Camera_Container" type="Node2D" parent="."]
+
+[node name="Camera" type="Camera2D" parent="Camera_Container"]
+z_index = 30
+current = true
+limit_left = -1000000
+limit_top = -1000000
+limit_right = 1000000
+limit_bottom = 1000000
