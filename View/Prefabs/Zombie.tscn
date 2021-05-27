@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="Zombie" type="Node2D"]
+
+[node name="EntitySprite" type="Sprite" parent="."]
+
+[node name="SlashSprite" type="Sprite" parent="."]
+
+[node name="GetHitAnim" type="Node2D" parent="."]
+
+[node name="MovementAnim" type="Node2D" parent="."]
+
+[node name="AttackAnim" type="Node2D" parent="."]

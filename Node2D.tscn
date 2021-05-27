@@ -30,7 +30,7 @@
 [ext_resource path="res://Images/WaterTile.png" type="Texture" id=28]
 [ext_resource path="res://Demo/View/Timer.cs" type="Script" id=29]
 [ext_resource path="res://Images/cross.png" type="Texture" id=30]
-[ext_resource path="res://View/BackupNode.tscn" type="PackedScene" id=31]
+[ext_resource path="res://View/Prefabs/BackupNode.tscn" type="PackedScene" id=31]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
