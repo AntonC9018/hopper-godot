@@ -14,5 +14,12 @@ namespace Hopper_Godot.View
             TelegraphTexture = telegraphTexture;
             SlashTexture = slashTexture;
         }
+
+        public SpriteSet()
+        {
+            IdleTexture = (Texture)GD.Load("res://Images/Enemies/zombie.png");
+            TelegraphTexture = (Texture)GD.Load("res://Images/Enemies/zombie_a.png");
+            SlashTexture = (Texture)GD.Load("res://Images/Enemies/zombie_s.png");
+        }
     }
 }

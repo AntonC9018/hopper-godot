@@ -19,7 +19,7 @@ namespace Hopper_Godot.View
 			slashSprite = (Sprite) GetNode("SlashSprite");
 			
 			movementAnim = (MovementAnim) GetNode("MovementAnim");
-			movementAnim.SetSpriteNode(enemySprite);
+			movementAnim.SetEntitySprite(enemySprite);
 
 			attackAnim = (AttackAnim) GetNode("AttackAnim");
 			attackAnim.SetSlashSprite(slashSprite);

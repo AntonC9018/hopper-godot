@@ -25,7 +25,7 @@ namespace Hopper_Godot.View
             this.entitySprite = entitySprite;
         }
 
-        public void StartAttack()
+        public void StartAnim()
         {
             animStopwatch.Reset();
             animStopwatch.Start();
@@ -51,7 +51,7 @@ namespace Hopper_Godot.View
             animStopwatch.Stop();
             animStopwatch.Reset();
             isRunning = false;
-            entitySprite.SelfModulate = new Color(1, 1, 1, 0);
+            entitySprite.SelfModulate = new Color(1, 1, 1, 1);
         }
     }
 }

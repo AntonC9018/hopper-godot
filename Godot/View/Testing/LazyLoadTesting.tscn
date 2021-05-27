@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://View/Testing/InputEmulator.cs" type="Script" id=1]
+[ext_resource path="res://View/Testing/Entity.tscn" type="PackedScene" id=2]
+[ext_resource path="res://View/Prefabs/BackupNode.tscn" type="PackedScene" id=3]
+[ext_resource path="res://View/EntityAnimator.cs" type="Script" id=4]
+
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BackupNode" parent="." instance=ExtResource( 3 )]
+
+[node name="Entity" parent="." instance=ExtResource( 2 )]
+script = ExtResource( 4 )
+
+[node name="InputEmulator" type="Node2D" parent="Entity"]
+script = ExtResource( 1 )
