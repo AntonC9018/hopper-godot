@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hopper_Godot", "Hopper_Godot.csproj", "{5C7E1CAF-FF17-4EB7-9AC4-861ADE4C6B07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hopper.Godot", "Hopper.Godot.csproj", "{5C7E1CAF-FF17-4EB7-9AC4-861ADE4C6B07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

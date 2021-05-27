@@ -1,4 +1,4 @@
-﻿namespace Hopper_Godot.View
+﻿namespace Hopper.Godot.View
 {
     public class PrefabManager
     {

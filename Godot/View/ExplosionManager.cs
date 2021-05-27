@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Godot;
 
-namespace Hopper_Godot.View
+namespace Hopper.Godot.View
 {
     public static class ExplosionManager
     {

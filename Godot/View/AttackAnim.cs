@@ -4,7 +4,7 @@ using Godot;
 
 //TODO: mirror sprite based on attack direction
 
-namespace Hopper_Godot.View
+namespace Hopper.Godot.View
 {
     public abstract class AttackAnim : Node2D
     {

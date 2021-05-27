@@ -1,7 +1,6 @@
-﻿using System.Net.Mime;
-using Godot;
+﻿using Godot;
 
-namespace Hopper_Godot.View
+namespace Hopper.Godot.View
 {
     public static class AssetManager
     {

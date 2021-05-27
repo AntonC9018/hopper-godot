@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using Hopper_Godot.View;
+using Hopper.Godot.View;
 
 public class InputEmulator : Node2D
 {
