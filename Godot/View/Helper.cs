@@ -19,8 +19,6 @@ namespace Hopper_Godot.View
 
             var result = (4 * peak / duration) * (-x * x / duration + x);
             
-            GD.Print(result);
-            
             return result;
         }
         

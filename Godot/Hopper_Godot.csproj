@@ -3,9 +3,9 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>Hopper_Godot</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Hopper\Core\Hopper.Core.csproj" />
-    <ProjectReference Include="..\Hopper\TestContent\Hopper.TestContent.csproj" />
+    <Reference Include="Newtonsoft.Json"> 
+        <HintPath>Hopper\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
