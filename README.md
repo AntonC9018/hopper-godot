@@ -14,3 +14,17 @@ Or clone this repo via the github app (thus non-recursively), then manually init
 ```
 git submodule update --init
 ```
+
+Now, you need to generate code for `Core`, `TestContent` and the `Godot` project itself.
+From the root folder, run the following in the console:
+```
+cd Hopper/Meta
+dotnet run Hopper.Core;../../Hopper/Core/Hopper.Core.csproj Hopper.TestContent;../../Hopper/TestContent/Hopper.TestContent.csproj Hopper.Godot;../../Godot/Hopper.Godot.csproj
+```
+
+It will take a few seconds (perhaps a minute) to compile and run.
+
+You may also use `meta.bat` for this.
+```
+meta all
+```
