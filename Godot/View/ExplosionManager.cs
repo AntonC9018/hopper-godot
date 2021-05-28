@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Godot;
 using Hopper.Godot.Utils;
+using Hopper.Shared.Attributes;
 using Hopper.TestContent;
-using HopperExport = Hopper.Shared.Attributes.ExportAttribute;
-using HopperVector = Hopper.Utils.Vector.IntVector2;
+using Hopper.Utils.Vector;
+using Sprite = Godot.Sprite;
 
 namespace Hopper.Godot.View
 {
@@ -15,8 +15,8 @@ namespace Hopper.Godot.View
         
         // TODO: make sure that ClearExplosions happens first 
 
-        [HopperExport(Chain = "@" + nameof(Explosion) + ".Explosion")]
-        public static void AddExplosion(HopperVector position)
+        [Export(Chain = "@" + nameof(Explosion) + ".Explosion")]
+        public static void AddExplosion(IntVector2 position)
         {
             if (visibleSprites < explosionsList.Count)
             {
