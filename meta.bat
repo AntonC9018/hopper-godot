@@ -2,9 +2,9 @@
 cd Hopper/Meta
 
 if %1==all (
-    call dotnet run Hopper.Core;../../Hopper/Core/Hopper.Core.csproj Hopper.TestContent;../../Hopper/TestContent/Hopper.TestContent.csproj Hopper.Godot;../../Godot/Hopper.Godot.csproj
+    call dotnet run Hopper.Core;../../Hopper/Core/Hopper.Core.csproj Hopper.TestContent;../../Hopper/TestContent/Hopper.TestContent.csproj Hopper.View;../../Godot/Hopper.View.csproj
 ) else (
-    call dotnet run Hopper.Core Hopper.TestContent Hopper.Godot;../../Godot/Hopper.Godot.csproj
+    call dotnet run Hopper.Core Hopper.TestContent Hopper.View;../../Godot/Hopper.View.csproj
 )
 
 cd ..

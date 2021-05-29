@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace Hopper.Godot.View
+namespace Hopper.View
 {
     public static class AssetManager
     {

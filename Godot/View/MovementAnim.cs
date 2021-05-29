@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 //TODO: mirror entity based on direction
 
-namespace Hopper.Godot.View
+namespace Hopper.View
 {
     public abstract class MovementAnim : Node2D
     {

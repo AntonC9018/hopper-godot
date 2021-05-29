@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Hopper.Godot.View
+namespace Hopper.View
 {
     public class EntityAnimator : Node2D
     {

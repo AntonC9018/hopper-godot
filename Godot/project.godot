@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Hopper.Godot"
+config/name="Hopper.View"
 run/main_scene="res://View/Testing/Enemy.tscn"
 config/icon="res://icon.png"
 

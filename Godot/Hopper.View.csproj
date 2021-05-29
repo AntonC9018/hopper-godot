@@ -1,8 +1,8 @@
 <Project Sdk="Godot.NET.Sdk/3.2.3">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <RootNamespace>Hopper.Godot</RootNamespace>
-    <AssemblyName>Hopper.Godot</AssemblyName>
+    <RootNamespace>Hopper.View</RootNamespace>
+    <AssemblyName>Hopper.View</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

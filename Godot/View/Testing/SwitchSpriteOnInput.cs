@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Hopper.Godot.View.Testing
+namespace Hopper.View.Testing
 {
 	public class SwitchSpriteOnInput : Node2D
 	{

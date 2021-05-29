@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Hopper.Godot.View
+namespace Hopper.View.Testing
 {
 	public class EnemyAnimTesting : Node2D
 	{

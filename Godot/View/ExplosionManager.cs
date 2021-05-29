@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Hopper.Godot.Utils;
+using Hopper.View.Utils;
 using Hopper.Shared.Attributes;
 using Hopper.TestContent;
 using Hopper.Utils.Vector;
 using Sprite = Godot.Sprite;
 
-namespace Hopper.Godot.View
+namespace Hopper.View
 {
     public static partial class ExplosionManager
     {

@@ -1,7 +1,7 @@
 ﻿using Godot;
 using System.Collections.Generic;
 
-namespace Hopper.Godot.View
+namespace Hopper.View
 {
     public class PrefabFactory
     {
