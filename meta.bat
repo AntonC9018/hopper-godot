@@ -1,4 +1,9 @@
 @echo off
+
+cd View
+call dotnet restore
+cd ..
+
 cd Hopper/Meta
 
 if %1==all (
