@@ -12,7 +12,7 @@ namespace Hopper.View
         public static RegistryExtensionPath<ViewRegistryExtension> RegistryExtensionPath;
 
         public static ViewRegistryExtension GetViewExtension(this Registry registry)
-            => RegistryExtensionPath.Follow(registry);
+            => RegistryExtensionPath.Get(registry);
 
         private static void CustomInit()
         {
