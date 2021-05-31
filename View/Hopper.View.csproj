@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="View\EntityAnimTest\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Remove="View\EntityAnimTest\**" />
   </ItemGroup>
 </Project>
