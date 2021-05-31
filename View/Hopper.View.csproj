@@ -9,4 +9,12 @@
     <ProjectReference Include="..\Hopper\Core\Hopper.Core.csproj" />
     <ProjectReference Include="..\Hopper\TestContent\Hopper.TestContent.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="View\EntityAnimTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="View\EntityAnimTest\**" />
+  </ItemGroup>
 </Project>

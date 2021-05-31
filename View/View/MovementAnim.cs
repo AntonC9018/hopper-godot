@@ -2,11 +2,9 @@
 using Godot;
 using System.Diagnostics;
 
-//TODO: mirror entity based on direction
-
 namespace Hopper.View
 {
-    public class MovementAnim : Node2D
+    public class MovementAnim : Node
     {
         public enum EMovementType
         {
@@ -27,15 +25,23 @@ namespace Hopper.View
         public static float Peak = -25f;
         public bool isLookingRight = true;
 
-        public void SetEntitySprite(Node2D spriteNode)
+        
+        public override void _Ready()
         {
-            this.spriteNode = spriteNode;
+            var parent = (EntityAnimator)GetParent();
+            SetEntitySprite(parent.GetLazy(EntityAnimator.NodeIndex.Entity));
         }
+
 
         public override void _Process(float delta)
         {
             if (isRunning)
                 CycleMovement();
+        }
+        
+        public void SetEntitySprite(Node2D spriteNode)
+        {
+            this.spriteNode = spriteNode;
         }
 
         public void StartMovement(Vector2 source, Vector2 destination, EMovementType eMovementType)

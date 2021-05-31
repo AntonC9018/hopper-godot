@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using Godot;
 
-//TODO: mirror sprite based on attack direction
 
 namespace Hopper.View
 {
@@ -15,6 +14,12 @@ namespace Hopper.View
         public float Duration = 0.33f;
         public float Peak = 1f;
         public bool isLookingRight = true;
+
+        public override void _Ready()
+        {
+            var parent = (EntityAnimator)GetParent();
+            SetSlashSprite(parent.GetLazy<Sprite>(EntityAnimator.NodeIndex.Slash));
+        }
 
         public override void _Process(float delta)
         {

@@ -1,133 +1,193 @@
 using Godot;
+using Godot.Collections;
 
 namespace Hopper.View
 {
-    public class EntityAnimator : Node2D
-    {
-        private struct ComponentPath
-        {
-            public static readonly string EntitySpritePath = "EntitySprite";
-            public static readonly string SlashSpritePath = "SlashSprite";
-            public static readonly string MovementAnimPath = "MovementAnim";
-            public static readonly string AttackAnimPath = "AttackAnim";
-            public static readonly string GetHitAnimPath = "GetHitAnim";
-        }
+	public class EntityAnimator : Node2D
+	{
+		private struct ComponentPath
+		{
+			public static readonly string EntitySpritePath = "EntitySprite";
+			public static readonly string SlashSpritePath = "SlashSprite";
+			public static readonly string MovementAnimPath = "MovementAnim";
+			public static readonly string AttackAnimPath = "AttackAnim";
+			public static readonly string GetHitAnimPath = "GetHitAnim";
+		}
+		
+		private static string[] ComponentPathArr =
+		{
+			"EntitySprite",
+			"SlashSprite",
+			"MovementAnim",
+			"AttackAnim",
+			"GetHitAnim"
+		};
+		
+		public class Index<T>
+		{
+			public int Id;
 
-        private SpriteSet entitySpriteSet;
-        private Sprite entitySprite;
-        private Sprite slashSprite;
-        private static Node2D backupNode;
+			public Index(int Id)
+			{
+				this.Id = Id;
+			}
 
-        private MovementAnim movementAnim;
-        private AttackAnim attackAnim;
-        private GetHitAnim getHitAnim;
+			public override bool Equals(object obj)
+			{
+				return Id.Equals((obj as Index<T>).Id);
+			}
 
-        public Vector2 actualPosition;
+			public override int GetHashCode()
+			{
+				return Id.GetHashCode();
+			}
 
-        public override void _Ready()
-        {
-            if (backupNode is null)
-            {
-                backupNode = (Node2D) GetParent().FindNode("BackupNode");
-                GD.Print("Loaded backup node " + backupNode.Name);
-            }
-        }
+			public override string ToString()
+			{
+				return $"Index<{typeof(T).Name}>({Id.ToString()})";
+			}
 
-        public void SkipAnimations()
-        {
-            movementAnim?.StopMovement();
-            attackAnim?.StopAttack();
-            getHitAnim?.StopAnim();
+			public static bool operator ==(Index<T> index1, Index<T> index2)
+			{
+				return index1.Id == index2.Id;
+			}
 
-            // ? before function call to make sure the object is not null
-        }
+			public static bool operator !=(Index<T> index1, Index<T> index2)
+			{
+				return index1.Id != index2.Id;
+			}
+		}
+		
+		public static class NodeIndex
+		{
+			public static readonly Index<Sprite> Entity = new Index<Sprite>(0);
+			public static readonly Index<Sprite> Slash = new Index<Sprite>(1);
+			public static readonly Index<MovementAnim> Movement = new Index<MovementAnim>(2);
+			public static readonly Index<AttackAnim> Attack = new Index<AttackAnim>(3);
+			public static readonly Index<GetHitAnim> GetHit = new Index<GetHitAnim>(4);
+		}
+		
+		
+		private SpriteSet entitySpriteSet;
 
-        public void Move(Vector2 destination, MovementAnim.EMovementType movementType)
-        {
-            if (entitySprite is null)
-                entitySprite = (Sprite)LoadNode(ComponentPath.EntitySpritePath);
-            
-            if (movementAnim is null)
-            {
-                movementAnim = (MovementAnim) LoadNode(ComponentPath.MovementAnimPath);
-                movementAnim.SetEntitySprite(entitySprite);
-            }
+		private static Node2D backupNode;
 
-            movementAnim.StartMovement(actualPosition, destination, movementType);
-            actualPosition = destination;
-        }
+		public Vector2 actualPosition;
 
-        public void SetIdle()
-        {
-            if (entitySprite is null)
-                entitySprite = (Sprite) LoadNode(ComponentPath.EntitySpritePath);
+		private Dictionary<int, Node> store = new Dictionary<int, Node>();
 
-            if (entitySpriteSet is null)
-                entitySpriteSet = new SpriteSet();
 
-            entitySprite.Texture = entitySpriteSet.IdleTexture;
-        }
+		public T GetLazy<T>(Index<T> nodeIndex) where T:Node
+		{
+			if (!store.TryGetValue(nodeIndex.Id, out var node))
+			{
+				node = LoadNode(ComponentPathArr[nodeIndex.Id]);
+				store.Add(nodeIndex.Id, node);
+			}
+			
+			GD.Print(ComponentPathArr[nodeIndex.Id]);
+			GD.Print(node.Name);
 
-        public void SetTelegraph()
-        {
-            if (entitySprite is null)
-                entitySprite = (Sprite) LoadNode(ComponentPath.EntitySpritePath);
+			return (T)node;
+		}
 
-            if (entitySpriteSet is null)
-                entitySpriteSet = new SpriteSet();
+		public T GetOrNull<T>(Index<T> nodeIndex) where T:Node
+		{
+			if (!store.TryGetValue(nodeIndex.Id, out var node))
+				return (T) node;
 
-            entitySprite.Texture = entitySpriteSet.TelegraphTexture;
-        }
+			return null;
+		}
+		
 
-        public void Attack(Vector2 targetPos)
-        {
-            SetIdle();
-            
-            if (slashSprite is null)
-                slashSprite = (Sprite) LoadNode(ComponentPath.SlashSpritePath);
 
-            if (attackAnim is null)
-            {
-                attackAnim = (AttackAnim) LoadNode(ComponentPath.AttackAnimPath);
-                attackAnim.SetSlashSprite(slashSprite);
-            }
-            
-            movementAnim.LookAt(targetPos);
+		public override void _Ready()
+		{
+			if (backupNode is null)
+			{
+				backupNode = (Node2D) GetParent().FindNode("BackupNode");
+				GD.Print("Loaded backup node " + backupNode.Name);
+			}
+		}
 
-            attackAnim.SetDirection(movementAnim.isLookingRight);
-            attackAnim.StartAttack(targetPos);
-        }
+		public void SkipAnimations()
+		{
+			GetOrNull(NodeIndex.Movement)?.StopMovement();
+			GetOrNull(NodeIndex.Attack)?.StopAttack();
+			GetOrNull(NodeIndex.GetHit)?.StopAnim();
+			
+			
+			// movementAnim?.StopMovement();
+			// attackAnim?.StopAttack();
+			// getHitAnim?.StopAnim();
 
-        public void GetHit()
-        {
-            if (entitySprite is null)
-                entitySprite = (Sprite)LoadNode(ComponentPath.EntitySpritePath);
-            
-            if (getHitAnim is null)
-            {
-                getHitAnim = (GetHitAnim) LoadNode(ComponentPath.GetHitAnimPath);
-                getHitAnim.SetEntitySprite(entitySprite);
-            }
-            
-            getHitAnim.StartAnim();
-        }
+			// ? before function call to make sure the object is not null
+		}
 
-        public void DeleteEntity()
-        {
-            QueueFree();
-        }
+		public void Move(Vector2 destination, MovementAnim.EMovementType movementType)
+		{
+			var movementAnim = GetLazy(NodeIndex.Movement);
 
-        private Node2D LoadNode(string name)
-        {
-            var node2D = (Node2D) GetNodeOrNull(name);
+			movementAnim.StartMovement(actualPosition, destination, movementType);
+			actualPosition = destination;
+		}
 
-            if (node2D is null)
-            {
-                node2D = (Node2D) backupNode.GetNode(name).Duplicate();
-                AddChild(node2D);
-            }
+		public void SetIdle()
+		{
+			var entitySprite = GetLazy(NodeIndex.Entity);
 
-            return node2D;
-        }
-    }
+			if (entitySpriteSet is null)
+				entitySpriteSet = new SpriteSet();
+
+			entitySprite.Texture = entitySpriteSet.IdleTexture;
+		}
+
+		public void SetTelegraph()
+		{
+			var entitySprite = GetLazy(NodeIndex.Entity);
+
+			if (entitySpriteSet is null)
+				entitySpriteSet = new SpriteSet();
+
+			entitySprite.Texture = entitySpriteSet.TelegraphTexture;
+		}
+
+		public void Attack(Vector2 targetPos)
+		{
+			SetIdle();
+
+			var movementAnim = GetLazy(NodeIndex.Movement);
+			var attackAnim   = GetLazy(NodeIndex.Attack);
+			
+			movementAnim.LookAt(targetPos);
+
+			attackAnim.SetDirection(movementAnim.isLookingRight);
+			attackAnim.StartAttack(targetPos);
+		}
+
+		public void GetHit()
+		{
+			var getHitAnim = GetLazy(NodeIndex.GetHit);
+			
+			getHitAnim.StartAnim();
+		}
+
+		public void DeleteEntity()
+		{
+			QueueFree();
+		}
+
+		private Node LoadNode(string name)
+		{
+			var node2D = GetNodeOrNull(name);
+
+			if (node2D is null)
+			{
+				node2D = backupNode.GetNode(name).Duplicate();
+				AddChild(node2D);
+			}
+
+			return node2D;
+		}
+	}
 }
