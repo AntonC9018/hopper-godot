@@ -1,4 +1,5 @@
 using Godot;
+using Hopper.View.Animations;
 
 namespace Hopper.View.Testing
 {

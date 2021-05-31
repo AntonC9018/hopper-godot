@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Godot;
 
 
-namespace Hopper.View
+namespace Hopper.View.Animations
 {
     public class AttackAnim : Node2D
     {

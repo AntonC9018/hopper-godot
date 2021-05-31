@@ -2,7 +2,7 @@
 
 [ext_resource path="res://View/Testing/InputEmulator.cs" type="Script" id=1]
 [ext_resource path="res://View/Prefabs/BackupNode.tscn" type="PackedScene" id=3]
-[ext_resource path="res://View/EntityAnimator.cs" type="Script" id=4]
+[ext_resource path="res://View/Animations/EntityAnimator.cs" type="Script" id=4]
 
 [node name="Node2D" type="Node2D"]
 

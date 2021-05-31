@@ -1,19 +1,10 @@
 using Godot;
 using Godot.Collections;
 
-namespace Hopper.View
+namespace Hopper.View.Animations
 {
 	public class EntityAnimator : Node2D
 	{
-		private struct ComponentPath
-		{
-			public static readonly string EntitySpritePath = "EntitySprite";
-			public static readonly string SlashSpritePath = "SlashSprite";
-			public static readonly string MovementAnimPath = "MovementAnim";
-			public static readonly string AttackAnimPath = "AttackAnim";
-			public static readonly string GetHitAnimPath = "GetHitAnim";
-		}
-		
 		private static string[] ComponentPathArr =
 		{
 			"EntitySprite",
@@ -25,7 +16,7 @@ namespace Hopper.View
 		
 		public class Index<T>
 		{
-			public int Id;
+			public readonly int Id;
 
 			public Index(int Id)
 			{

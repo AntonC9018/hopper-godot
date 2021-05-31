@@ -2,7 +2,7 @@
 using Godot;
 using System.Diagnostics;
 
-namespace Hopper.View
+namespace Hopper.View.Animations
 {
     public class MovementAnim : Node
     {

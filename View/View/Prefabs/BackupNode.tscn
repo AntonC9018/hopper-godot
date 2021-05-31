@@ -1,11 +1,15 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://View/EntityAnimator.cs" type="Script" id=1]
-[ext_resource path="res://View/AttackAnim.cs" type="Script" id=2]
-[ext_resource path="res://View/GetHitAnim.cs" type="Script" id=3]
-[ext_resource path="res://View/MovementAnim.cs" type="Script" id=4]
+[ext_resource path="res://View/Animations/EntityAnimator.cs" type="Script" id=1]
+[ext_resource path="res://View/Animations/AttackAnim.cs" type="Script" id=2]
+[ext_resource path="res://View/Animations/GetHitAnim.cs" type="Script" id=3]
+[ext_resource path="res://View/Animations/MovementAnim.cs" type="Script" id=4]
 [ext_resource path="res://Images/Enemies/zombie.png" type="Texture" id=5]
 [ext_resource path="res://Images/Enemies/zombie_s.png" type="Texture" id=6]
+
+
+
+
 
 [node name="BackupNode" type="Node2D"]
 script = ExtResource( 1 )
