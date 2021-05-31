@@ -7,13 +7,14 @@
 [ext_resource path="res://Images/Enemies/zombie_s.png" type="Texture" id=6]
 
 [node name="BackupNode" type="Node2D"]
-visible = false
 
 [node name="EntitySprite" type="Sprite" parent="."]
+scale = Vector2( 5, 5 )
 texture = ExtResource( 5 )
 
 [node name="SlashSprite" type="Sprite" parent="."]
 self_modulate = Color( 1, 1, 1, 0 )
+scale = Vector2( 5, 5 )
 texture = ExtResource( 6 )
 
 [node name="GetHitAnim" type="Node2D" parent="."]

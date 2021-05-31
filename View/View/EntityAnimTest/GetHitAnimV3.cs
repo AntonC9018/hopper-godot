@@ -3,9 +3,9 @@ using Godot;
 
 //TODO: mirror sprite based on attack direction
 
-namespace Hopper.View
+namespace Hopper.View.EntityAnimTesting
 {
-    public class GetHitAnim : Node2D
+    public class GetHitAnimV3 : Node2D
     {
         private Stopwatch animStopwatch = new Stopwatch();
         private Sprite entitySprite;
@@ -13,6 +13,13 @@ namespace Hopper.View
         
         public float Duration = 0.33f;
         public float Peak = 1f;
+        
+        public override void _Ready()
+        {
+            var parent = (EntityAnimatorV3)GetParent();
+            SetEntitySprite(parent.GetLazy<Sprite>(EntityAnimatorV3.NodeIndex.EntitySprite));
+        }
+
 
         public override void _Process(float delta)
         {

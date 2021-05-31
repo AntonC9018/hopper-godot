@@ -4,9 +4,9 @@ using Godot;
 
 //TODO: mirror sprite based on attack direction
 
-namespace Hopper.View
+namespace Hopper.View.EntityAnimTesting
 {
-    public class AttackAnim : Node2D
+    public class AttackAnimV3 : Node2D
     {
         private Stopwatch animStopwatch = new Stopwatch();
         private Sprite slashSprite;
@@ -15,6 +15,12 @@ namespace Hopper.View
         public float Duration = 0.33f;
         public float Peak = 1f;
         public bool isLookingRight = true;
+
+        public override void _Ready()
+        {
+            var parent = (EntityAnimatorV3)GetParent();
+            SetSlashSprite(parent.GetLazy<Sprite>(EntityAnimatorV3.NodeIndex.SlashSprite));
+        }
 
         public override void _Process(float delta)
         {
