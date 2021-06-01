@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Godot;
+using Hopper.View.Animations;
 
 namespace Hopper.View
 {
@@ -18,13 +20,16 @@ namespace Hopper.View
             // {8, AssetManager.TrapPrefab},
         };
 
-        public override void _Ready()
+        public void ReplaceTiles()
         {
-            foreach (var key in KeyToPrefab.Keys)
+            foreach (int id in TileSet.GetTilesIds())
             {
-                var positions = GetUsedCellsById(key);
-                
-                
+                var path = TileSet.TileGetTexture(id).ResourcePath;
+
+                foreach (Vector2 pos in GetUsedCellsById(id))
+                {
+                    // instantiate things at given positions
+                }
             }
         }
     }

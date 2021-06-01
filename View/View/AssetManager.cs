@@ -24,6 +24,8 @@ namespace Hopper.View
         {
             var defaultSlashTexture = (Texture) GD.Load("res://Images/Enemies/zombie_s.png");
 
+            
+
             ZombieSpriteSet = new SpriteSet(
                 (Texture) GD.Load("res://Images/Enemies/zombie.png"),
                 (Texture) GD.Load("res://Images/Enemies/zombie_a.png"),
