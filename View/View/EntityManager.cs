@@ -1,36 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
-using Godot;
+using Hopper.Core;
+using Hopper.Core.WorldNS;
 using Hopper.View.Animations;
+using Hopper.View.Utils;
+using HopperIntVector2 = Hopper.Utils.Vector.IntVector2;
 
 namespace Hopper.View
 {
-    public class EntityManager : TileMap
+    public static class TileMapExtensions
     {
-        private Dictionary<int, PackedScene> KeyToPrefab = new Dictionary<int, PackedScene>()
+        /// <summary>
+        ///
+        /// Instantiates an entity for each tiles in the tilemap which represents a logical entity.
+        /// Removes all such tiles, effectively replacing them with fresh entities.
+        /// The entities are spawned in the <c>World.Global</c> Hopper world, 
+        /// while their duplicated prefabs appear in the scene (currently unimplemented). 
+        ///
+        /// The tiles that do not represent an entity are ignored.
+        /// In order to aid debugging, in debug mode, a message is printed 
+        /// if an associated entity type has not been found.
+        ///
+        /// The textures associated with the tiles must have their name match the name of the desired entity type.
+        /// Currently, the name must exactly match the name of the script, associated with the given entity type. 
+        ///
+        /// </summary>
+        public static void InstantiateEntities_ForTilesRepresentingEntityTypes(this Godot.TileMap tileMap)
         {
-            {0, AssetManager.BomberPrefab},
-            {1, AssetManager.RobotPrefab},
-            {2, AssetManager.RobotSummonPrefab},
-            {3, AssetManager.ZombiePrefab},
-            // {4, AssetManager.PlayerPrefab},
-            // {5, AssetManager.ChestPrefab},
-            {6, AssetManager.WallPrefab},
-            // {7, AssetManager.WaterTilePrefab},
-            // {8, AssetManager.TrapPrefab},
-        };
-
-        public void ReplaceTiles()
-        {
-            foreach (int id in TileSet.GetTilesIds())
+            foreach (int id in tileMap.TileSet.GetTilesIds())
             {
-                var path = TileSet.TileGetTexture(id).ResourcePath;
+                var path = tileMap.TileSet.TileGetTexture(id).ResourcePath;
 
-                foreach (Vector2 pos in GetUsedCellsById(id))
+                // TODO: 
+                // Entities with more than one sprite might have more information to the name of the sprite file. 
+                // E.g. the "_default" part in Images/Player_default.png
+                // This part has to either follow some pattern, so that it could be stripped with a pattern, 
+                // or we should rethink the way we're getting the entity types associated to a given tile.
+                //
+                // A different approach would be to make our own godot extension for tile map creation,
+                // where we would reference prefabs instead of textures.
+                // This would be a lot of work though, and comes with its own issues.
+                var className = System.IO.Path.GetFileNameWithoutExtension(path);
+                
+                if (!Registry.Global.EntityFactory.TryGetByName(className, out var factory))
                 {
-                    // instantiate things at given positions
+#if DEBUG
+                    Console.WriteLine($"Ignoring {className} since it did not match any entity factories in the registry.");
+#endif
+                    continue;
+                }
+
+                foreach (Godot.Vector2 pos in tileMap.GetUsedCellsById(id))
+                {
+                    // Since we assume the factory has been set up previously, 
+                    // a sprite should also be created at the given position in the scene.
+                    Entity entity = World.Global.SpawnEntity(factory, pos.ToHopperWorldVector());
+                    
+                    // TODO: remove cell at `pos`.
                 }
             }
         }
+    }
+
+    // idk what this class is supposed to do exactly?
+    public class EntityManager : Godot.TileMap
+    {
+        
     }
 }

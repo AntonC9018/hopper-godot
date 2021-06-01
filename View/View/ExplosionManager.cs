@@ -22,7 +22,7 @@ namespace Hopper.View
             {
                 var currentSprite = explosionsList[visibleSprites];
                 
-                currentSprite.Position = position.Convert();
+                currentSprite.Position = position.ToSceneVector();
                 currentSprite.Visible = true;
                 
                 visibleSprites++;
@@ -30,7 +30,7 @@ namespace Hopper.View
             else
             {
                 var newSprite = (Sprite)explosionPrefab.Duplicate();
-                newSprite.Position = position.Convert();
+                newSprite.Position = position.ToSceneVector();
                 explosionsList.Add(newSprite);
             }
         }
