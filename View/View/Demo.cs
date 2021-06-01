@@ -32,7 +32,7 @@ namespace Hopper.View
             {
                 if (!Registry.Global.EntityFactory.TryGetByName(node.Name, out var factory))
                 {
-                    Console.WriteLine($"{node.Name} does not match an associate entity type in the registry!");
+                    Console.WriteLine($"{node.Name} does not match an associated entity type in the registry!");
                     continue;
                 }
                 
