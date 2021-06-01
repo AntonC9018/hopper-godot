@@ -1,6 +1,9 @@
 using Godot;
 using Godot.Collections;
 
+// TODO: check entity sprite set for textures in case of sprite lazy loading
+// TODO: load entity sprite in _Ready out of the entity sprite set
+
 namespace Hopper.View.Animations
 {
 	public class EntityAnimator : Node2D

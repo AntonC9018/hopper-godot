@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Hopper.View
 {
-    public class PrefabFactory
+    public static class PrefabFactory
     {
-        public Dictionary<Object, Node2D> PrefabList;
+        public static Dictionary<Object, Node2D> PrefabList;
         
-        public Node2D GeneratePrefab (int id)
+        public static Node2D GeneratePrefab (int id)
         {
             // generate main node with generic event receiver
             var root = new Node2D();
@@ -18,6 +18,5 @@ namespace Hopper.View
 
             return root;
         }
-        
     }
 }

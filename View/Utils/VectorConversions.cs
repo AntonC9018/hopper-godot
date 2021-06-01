@@ -5,7 +5,9 @@ namespace Hopper.View.Utils
 {
     public static class VectorConversions
     {
+        // scale also get regulated by the tilemap size 
+        public const int TileSize = 32;
         public static GodotVector2 Convert(this HopperIntVector2 vector) 
-            => new GodotVector2(vector.x, vector.y);
+            => new GodotVector2(vector.x, vector.y) * TileSize;
     }
 }
