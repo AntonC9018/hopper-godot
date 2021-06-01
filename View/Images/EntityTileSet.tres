@@ -1,15 +1,19 @@
 [gd_resource type="TileSet" load_steps=11 format=2]
 
-[ext_resource path="res://Images/Enemies/robot.png" type="Texture" id=1]
-[ext_resource path="res://Images/Enemies/robot_summon.png" type="Texture" id=2]
-[ext_resource path="res://Images/Enemies/bomber.png" type="Texture" id=3]
-[ext_resource path="res://Images/Enemies/zombie.png" type="Texture" id=4]
+[ext_resource path="res://Images/Enemies/Robot.png" type="Texture" id=1]
+[ext_resource path="res://Images/Enemies/RobotSummon.png" type="Texture" id=2]
+[ext_resource path="res://Images/Enemies/Bomber.png" type="Texture" id=3]
+[ext_resource path="res://Images/Enemies/Zombie.png" type="Texture" id=4]
 [ext_resource path="res://Images/candace4.png" type="Texture" id=5]
 [ext_resource path="res://Images/icecube.png" type="Texture" id=6]
 [ext_resource path="res://Images/crate.png" type="Texture" id=7]
 [ext_resource path="res://Images/WaterTile.png" type="Texture" id=8]
 [ext_resource path="res://Images/trap.png" type="Texture" id=9]
 [ext_resource path="res://Images/chest.png" type="Texture" id=10]
+
+
+
+
 
 [resource]
 0/name = "bomber.png 0"

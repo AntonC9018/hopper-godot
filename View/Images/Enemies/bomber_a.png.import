@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bomber_a.png-cc65059724f026bd3bb3959c3e2de167.stex"
+path="res://.import/Bomber_a.png-a308a12bc9b7fc5a6425e1649b3066e4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Enemies/bomber_a.png"
-dest_files=[ "res://.import/bomber_a.png-cc65059724f026bd3bb3959c3e2de167.stex" ]
+source_file="res://Images/Enemies/Bomber_a.png"
+dest_files=[ "res://.import/Bomber_a.png-a308a12bc9b7fc5a6425e1649b3066e4.stex" ]
 
 [params]
 
