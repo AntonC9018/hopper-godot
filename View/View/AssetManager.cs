@@ -22,31 +22,31 @@ namespace Hopper.View
 
         static AssetManager()
         {
-            var defaultSlashTexture = (Texture) GD.Load("res://Images/Enemies/zombie_s.png");
+            var defaultSlashTexture = (Texture) GD.Load("res://Images/Enemies/Zombie_s.png");
 
             
 
             ZombieSpriteSet = new SpriteSet(
-                (Texture) GD.Load("res://Images/Enemies/zombie.png"),
-                (Texture) GD.Load("res://Images/Enemies/zombie_a.png"),
+                (Texture) GD.Load("res://Images/Enemies/Zombie.png"),
+                (Texture) GD.Load("res://Images/Enemies/Zombie_a.png"),
                 defaultSlashTexture
             );
 
             RobotSpriteSet = new SpriteSet(
-                (Texture) GD.Load("res://Images/Enemies/robot.png"),
-                (Texture) GD.Load("res://Images/Enemies/robot_a.png"),
+                (Texture) GD.Load("res://Images/Enemies/Robot.png"),
+                (Texture) GD.Load("res://Images/Enemies/Robot_a.png"),
                 defaultSlashTexture
             );
 
             RobotSummonSpriteSet = new SpriteSet(
-                (Texture) GD.Load("res://Images/Enemies/robot_summon.png"),
-                (Texture) GD.Load("res://Images/Enemies/robot_summon_a.png"),
+                (Texture) GD.Load("res://Images/Enemies/RobotSummon.png"),
+                (Texture) GD.Load("res://Images/Enemies/RobotSummon_a.png"),
                 defaultSlashTexture
             );
 
             BomberSpriteSet = new SpriteSet(
-                (Texture) GD.Load("res://Images/Enemies/robot_summon.png"),
-                (Texture) GD.Load("res://Images/Enemies/robot_summon_a.png"),
+                (Texture) GD.Load("res://Images/Enemies/Bomber.png"),
+                (Texture) GD.Load("res://Images/Enemies/Bomber_a.png"),
                 null
             );
             

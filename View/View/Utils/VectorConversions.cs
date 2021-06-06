@@ -8,7 +8,7 @@ namespace Hopper.View.Utils
     {
         // scale also get regulated by the tilemap size 
         public const int TileSize = 32;
-        public const int TileSizeInv = 1 / TileSize;
+        public const float TileSizeInv = (float)1 / TileSize;
 
         public static GodotVector2 ToSceneVector(this HopperIntVector2 vector) 
             => new GodotVector2(vector.x, vector.y) * TileSize;
