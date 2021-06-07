@@ -15,7 +15,7 @@ namespace Hopper.View
         
         // TODO: make sure that ClearExplosions happens first 
 
-        [Export(Chain = "@" + nameof(Explosion) + ".Explosion")]
+        [Export(Chain = "g" + nameof(Explosion) + ".Explosion")]
         public static void AddExplosion(IntVector2 position)
         {
             if (visibleSprites < explosionsList.Count)
