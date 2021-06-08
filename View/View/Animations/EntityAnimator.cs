@@ -1,12 +1,14 @@
 using Godot;
 using Godot.Collections;
+using Hopper.Core.Components;
+using Hopper.Shared.Attributes;
 
 // TODO: check entity sprite set for textures in case of sprite lazy loading
 // TODO: load entity sprite in _Ready out of the entity sprite set
 
 namespace Hopper.View.Animations
 {
-	public class EntityAnimator : Node2D
+	public class EntityAnimator : IComponent
 	{
 		private static readonly string[] ComponentPathArr =
 		{
@@ -61,13 +63,16 @@ namespace Hopper.View.Animations
 			public static readonly Index<GetHitAnim> GetHit = new Index<GetHitAnim>(4);
 		}
 		
-		[Export]
+		[Godot.Export]
 		private Texture IdleTexture { get; set; }
 		
-		[Export]
+		[Godot.Export]
 		private Texture TelegraphTexture { get; set; }
 		
 		private static Node2D backupNode;
+		
+		[Inject]
+		public Node instanceNode;
 
 		public Vector2 actualPosition;
 
