@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://View/Animations/EntityAnimator.cs" type="Script" id=1]
 [ext_resource path="res://View/Animations/AttackAnim.cs" type="Script" id=2]
@@ -6,15 +6,12 @@
 [ext_resource path="res://View/Animations/MovementAnim.cs" type="Script" id=4]
 [ext_resource path="res://Images/Enemies/Zombie.png" type="Texture" id=5]
 [ext_resource path="res://Images/Enemies/Zombie_s.png" type="Texture" id=6]
-
-
-
-
-
-
+[ext_resource path="res://Images/Enemies/Zombie_a.png" type="Texture" id=7]
 
 [node name="BackupNode" type="Node2D"]
 script = ExtResource( 1 )
+IdleTexture = ExtResource( 5 )
+TelegraphTexture = ExtResource( 7 )
 
 [node name="EntitySprite" type="Sprite" parent="."]
 scale = Vector2( 5, 5 )

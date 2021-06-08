@@ -5,64 +5,62 @@ using Godot;
 
 namespace Hopper.View.Animations
 {
-    public class AttackAnim : Node2D
+    public class AttackAnim : Animator
     {
-        private Stopwatch animStopwatch = new Stopwatch();
         private Sprite slashSprite;
-        private bool isRunning;
-        
-        public float Duration = 0.33f;
+        private EntityAnimator parent;
         public float Peak = 1f;
         public bool isLookingRight = true;
+        
 
-        public override void _Ready()
-        {
-            var parent = (EntityAnimator)GetParent();
-            SetSlashSprite(parent.GetLazy<Sprite>(EntityAnimator.NodeIndex.Slash));
-        }
+        // TODO: replace this stuff
+        // public override void _Ready()
+        // {
+        //     var parent = (EntityAnimator)GetParent();
+        //     SetSlashSprite(parent.GetLazy<Sprite>(EntityAnimator.NodeIndex.Slash));
+        // }
+        //
+        // public override void _Process(float delta)
+        // {
+        //     if (isRunning)
+        //         CycleAttack();
+        // }
 
-        public override void _Process(float delta)
+        public void InitAnimator(EntityAnimator parent, Sprite slashSprite)
         {
-            if (isRunning)
-                CycleAttack();
-        }
-
-        public void SetSlashSprite(Sprite slashSprite)
-        {
+            this.parent = parent;
             this.slashSprite = slashSprite;
         }
 
-        public void StartAttack(Vector2 targetPos)
+        public void SetupAttack(Vector2 targetPos)
         {
             slashSprite.Position = targetPos;
-            
-            animStopwatch.Reset();
-            animStopwatch.Start();
-            isRunning = true;
+            StartAnim();
         }
-
-        private void CycleAttack()
+        
+        
+        public override void CycleAnim()
         {
-            var time = (float) animStopwatch.ElapsedTicks / Stopwatch.Frequency;
+            var time = GetElapsed();
             
             if (time > Duration)
             {
-                StopAttack();
+                StopAnim();
                 return;
             }
 
-
-            slashSprite.SelfModulate = new Color(1, 1, 1, Helper.SquareInterpolation(Peak, Duration, time));
+            // TODO: deal with these casts
+            slashSprite.SelfModulate = new Color(1, 1, 1, Helper.SquareInterpolation(Peak, (float)Duration, (float)time));
         }
 
-        public void StopAttack()
+        protected override void StopAnim()
         {
-            animStopwatch.Stop();
-            animStopwatch.Reset();
-            isRunning = false;
+            base.StopAnim();
             slashSprite.SelfModulate = new Color(1, 1, 1, 0);
         }
         
+        
+        // TODO: probably get rid of these
         public void FlipEntity()
         {
             slashSprite.Scale = new Vector2(-slashSprite.Scale.x, slashSprite.Scale.y);

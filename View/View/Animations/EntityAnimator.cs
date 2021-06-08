@@ -8,7 +8,7 @@ namespace Hopper.View.Animations
 {
 	public class EntityAnimator : Node2D
 	{
-		private static string[] ComponentPathArr =
+		private static readonly string[] ComponentPathArr =
 		{
 			"EntitySprite",
 			"SlashSprite",
@@ -61,9 +61,12 @@ namespace Hopper.View.Animations
 			public static readonly Index<GetHitAnim> GetHit = new Index<GetHitAnim>(4);
 		}
 		
+		[Export]
+		private Texture IdleTexture { get; set; }
 		
-		private SpriteSet entitySpriteSet;
-
+		[Export]
+		private Texture TelegraphTexture { get; set; }
+		
 		private static Node2D backupNode;
 
 		public Vector2 actualPosition;
@@ -79,7 +82,6 @@ namespace Hopper.View.Animations
 				store.Add(nodeIndex.Id, node);
 			}
 			
-			GD.Print(ComponentPathArr[nodeIndex.Id]);
 			GD.Print(node.Name);
 
 			return (T)node;
@@ -109,13 +111,6 @@ namespace Hopper.View.Animations
 			GetOrNull(NodeIndex.Movement)?.StopMovement();
 			GetOrNull(NodeIndex.Attack)?.StopAttack();
 			GetOrNull(NodeIndex.GetHit)?.StopAnim();
-			
-			
-			// movementAnim?.StopMovement();
-			// attackAnim?.StopAttack();
-			// getHitAnim?.StopAnim();
-
-			// ? before function call to make sure the object is not null
 		}
 
 		public void Move(Vector2 destination, MovementAnim.EMovementType movementType)
@@ -130,20 +125,18 @@ namespace Hopper.View.Animations
 		{
 			var entitySprite = GetLazy(NodeIndex.Entity);
 
-			if (entitySpriteSet is null)
-				entitySpriteSet = new SpriteSet();
+			// TODO: lazy load texture from backup
 
-			entitySprite.Texture = entitySpriteSet.IdleTexture;
+			entitySprite.Texture = IdleTexture;
 		}
 
 		public void SetTelegraph()
 		{
 			var entitySprite = GetLazy(NodeIndex.Entity);
 
-			if (entitySpriteSet is null)
-				entitySpriteSet = new SpriteSet();
+			// TODO: lazy load texture from backup
 
-			entitySprite.Texture = entitySpriteSet.TelegraphTexture;
+			entitySprite.Texture = TelegraphTexture;
 		}
 
 		public void Attack(Vector2 targetPos)
