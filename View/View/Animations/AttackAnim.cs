@@ -32,6 +32,7 @@ namespace Hopper.View.Animations
 
         public void SetupAnim(Vector2 targetPos)
         {
+            StopAnim();
             slashSprite.Position = targetPos;
             StartAnim();
         }

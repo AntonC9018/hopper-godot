@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Godot;
 using Hopper.Core.Components;
 
@@ -58,6 +59,39 @@ namespace Hopper.View.Animations
             }
             
             this.eMovementType = eMovementType;
+            
+            StartAnim();
+        }
+
+        public void SetupWalk(Vector2 source, Vector2 destination)
+        {
+            StopAnim();
+            
+            startPos = entitySprite.Position = source; 
+            destPos = destination;
+            
+            eMovementType = EMovementType.Walk;
+            
+            StartAnim();
+        }
+
+        public void SetupSlide(Vector2 source, Vector2 destination)
+        {
+            StopAnim();
+
+            startPos = entitySprite.Position = source; 
+            destPos = destination;
+            
+            eMovementType = EMovementType.Slide;
+            
+            StartAnim();
+        }
+
+        public void SetupJump()
+        {
+            StopAnim();
+
+            eMovementType = EMovementType.Jump;
             
             StartAnim();
         }

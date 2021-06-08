@@ -32,6 +32,7 @@ namespace Hopper.View.Animations
 
         public void SetupAnim()
         {
+            StopAnim();
             StartAnim();
         }
         
