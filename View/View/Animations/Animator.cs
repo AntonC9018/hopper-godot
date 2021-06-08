@@ -3,28 +3,28 @@ using System.Diagnostics;
 
 namespace Hopper.View.Animations
 {
-    public abstract class Animator
+    public abstract class Animator 
     {
         /// <summary>
         /// Sets a base class to be used by animations, with specific optimizations included
         /// </summary>
-        
-        
-        // a single centralized stopwatch instead of a local copy for each instance
-        private static readonly Stopwatch AnimStopwatch = new Stopwatch();
 
+        // a single centralized Stopwatch instead of a local copy for each instance
+        private static readonly Stopwatch AnimStopwatch = new Stopwatch();
+        protected static readonly float Duration = 0.33f;
+        
         private long startTime;
         private bool isRunning = false;
 
         public bool IsRunning => isRunning;
 
-        // changed type from float to double to prevent possible future issues due to long to float cast 
-        protected readonly double Duration = 0.33;
-
         static Animator()
         {
             AnimStopwatch.Start();
         }
+
+        // use this to get whatever assets you need from the entityAnimator
+        public abstract void InitAnimator(EntityAnimator entityAnimator);
 
         protected virtual void StartAnim()
         {
@@ -32,20 +32,24 @@ namespace Hopper.View.Animations
             startTime = AnimStopwatch.ElapsedTicks;
         }
 
-        protected virtual void StopAnim()
+        public virtual void StopAnim()
         {
             isRunning = false;
         }
 
-        protected double GetElapsed()
+        protected float GetElapsed()
         {
-            return (double)(AnimStopwatch.ElapsedTicks - startTime) / Stopwatch.Frequency;
+            // if shit hits the fan
+            // convert this back to double
+            return (float)(AnimStopwatch.ElapsedTicks - startTime) / Stopwatch.Frequency;
         }
-        
+
         // Call this every frame
         // Also include the actual animation here
-        public virtual void CycleAnim() {}
-        
-        
+        public virtual void CycleAnim()
+        {
+            if (!isRunning)
+                return;
+        }
     }
 }

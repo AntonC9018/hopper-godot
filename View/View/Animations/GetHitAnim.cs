@@ -1,17 +1,16 @@
-﻿using System.Diagnostics;
-using Godot;
+﻿using Godot;
+using Hopper.Core.Components;
 
 namespace Hopper.View.Animations
 {
-    public class GetHitAnim : Node2D
+    public class GetHitAnim : Animator, IComponent
     {
-        private Stopwatch animStopwatch = new Stopwatch();
         private Sprite entitySprite;
-        private bool isRunning;
         
-        public float Duration = 0.33f;
         public float Peak = 1f;
         
+        // TODO: replace this
+        /*
         public override void _Ready()
         {
             var parent = (EntityAnimator)GetParent();
@@ -24,22 +23,23 @@ namespace Hopper.View.Animations
             if (isRunning)
                 CycleAttack();
         }
-
-        public void SetEntitySprite(Sprite entitySprite)
+        */
+        
+        public override void InitAnimator(EntityAnimator entityAnimator)
         {
-            this.entitySprite = entitySprite;
+            entitySprite = entityAnimator.GetLazy(EntityAnimator.NodeIndex.Entity);
         }
 
-        public void StartAnim()
+        public void SetupAnim()
         {
-            animStopwatch.Reset();
-            animStopwatch.Start();
-            isRunning = true;
+            StartAnim();
         }
-
-        private void CycleAttack()
+        
+        public override void CycleAnim()
         {
-            var time = (float) animStopwatch.ElapsedTicks / Stopwatch.Frequency;
+            base.CycleAnim();
+
+            var time = GetElapsed();
             
             if (time > Duration)
             {
@@ -47,15 +47,12 @@ namespace Hopper.View.Animations
                 return;
             }
 
-
             entitySprite.SelfModulate = new Color(1, 1, 1, 1 - Helper.SquareInterpolation(Peak, Duration, time));
         }
 
-        public void StopAnim()
+        public override void StopAnim()
         {
-            animStopwatch.Stop();
-            animStopwatch.Reset();
-            isRunning = false;
+            base.StopAnim();
             entitySprite.SelfModulate = new Color(1, 1, 1, 1);
         }
     }

@@ -1,10 +1,10 @@
 ﻿using System;
 using Godot;
-using System.Diagnostics;
+using Hopper.Core.Components;
 
 namespace Hopper.View.Animations
 {
-    public class MovementAnim : Node
+    public class MovementAnim : Animator, IComponent
     {
         public enum EMovementType
         {
@@ -13,19 +13,16 @@ namespace Hopper.View.Animations
             Slide
         }
         
-        private Stopwatch animStopwatch = new Stopwatch();
-
         private Vector2 startPos;
         private Vector2 destPos;
-        private bool isRunning = false;
-        private Node2D spriteNode;
+        private Sprite entitySprite;
         private EMovementType eMovementType;
 
-        public static float Duration = 0.33f;
         public static float Peak = -25f;
         public bool isLookingRight = true;
 
-        
+        // TODO: replace this
+        /*
         public override void _Ready()
         {
             var parent = (EntityAnimator)GetParent();
@@ -38,20 +35,21 @@ namespace Hopper.View.Animations
             if (isRunning)
                 CycleMovement();
         }
+        */
         
-        public void SetEntitySprite(Node2D spriteNode)
+        public override void InitAnimator(EntityAnimator entityAnimator)
         {
-            this.spriteNode = spriteNode;
+            entitySprite = entityAnimator.GetLazy(EntityAnimator.NodeIndex.Entity);
         }
 
-        public void StartMovement(Vector2 source, Vector2 destination, EMovementType eMovementType)
+        public void SetupAnim(Vector2 source, Vector2 destination, EMovementType eMovementType)
         {
-            startPos = spriteNode.Position = source; 
+            startPos = entitySprite.Position = source; 
             destPos = eMovementType == EMovementType.Jump ? source : destination;    // set destination equal to source if jumping
 
             if (eMovementType != EMovementType.Jump && Mathf.Abs(destPos.x - startPos.x) > 10)
             {
-                isLookingRight = spriteNode.Scale.x > 0;
+                isLookingRight = entitySprite.Scale.x > 0;
 
                 bool isMovingRight = destPos.x - startPos.x > 0;
 
@@ -60,19 +58,19 @@ namespace Hopper.View.Animations
             }
             
             this.eMovementType = eMovementType;
-            isRunning = true;
             
-            animStopwatch.Reset();
-            animStopwatch.Start();
+            StartAnim();
         }
 
-        private void CycleMovement()
+        public override void CycleAnim()
         {
-            var time = (float) animStopwatch.ElapsedTicks / Stopwatch.Frequency;
+            base.CycleAnim();
+
+            var time = GetElapsed();
             
             if (time > Duration)
             {
-                StopMovement();
+                StopAnim();
                 return;
             }
 
@@ -83,14 +81,14 @@ namespace Hopper.View.Animations
 
                     walkFramePos.y += Helper.SquareInterpolation(Peak, Duration, time);    // little bit of bobbing for the jump
 
-                    spriteNode.Position = walkFramePos;
+                    entitySprite.Position = walkFramePos;
                     break;
                 
                 case EMovementType.Slide:
                     //var slideFramePos = LinearInterpolation(time);
                     var slideFramePos = Helper.LinearInterpolation(startPos, destPos, Duration, time);
                     
-                    spriteNode.Position = slideFramePos;
+                    entitySprite.Position = slideFramePos;
                     break;
                 
                 case EMovementType.Jump:
@@ -98,22 +96,20 @@ namespace Hopper.View.Animations
 
                     jumpFramePos.y += Helper.SquareInterpolation(Peak, Duration, time);    // little bit of bobbing for the jump
 
-                    spriteNode.Position = jumpFramePos;
+                    entitySprite.Position = jumpFramePos;
                     break;
             }
         }
 
-        public void StopMovement()
+        public override void StopAnim()
         {
-            animStopwatch.Stop();
-            animStopwatch.Reset();
-            isRunning = false;
-            spriteNode.Position = destPos;
+            base.StopAnim();
+            entitySprite.Position = destPos;
         }
 
         public void FlipEntity()
         {
-            spriteNode.Scale = new Vector2(-spriteNode.Scale.x, spriteNode.Scale.y);
+            entitySprite.Scale = new Vector2(-entitySprite.Scale.x, entitySprite.Scale.y);
             isLookingRight = !isLookingRight;
         }
 
@@ -130,10 +126,10 @@ namespace Hopper.View.Animations
 
         public bool GetRelativeDirection(Vector2 direction)
         {
-            if (Math.Abs(direction.x - spriteNode.Position.x) < 10f)
+            if (Math.Abs(direction.x - entitySprite.Position.x) < 10f)
                 return isLookingRight;
             
-            return direction.x - spriteNode.Position.x > 0;
+            return direction.x - entitySprite.Position.x > 0;
         }
     }
 }

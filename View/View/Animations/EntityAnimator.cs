@@ -95,8 +95,6 @@ namespace Hopper.View.Animations
 			return null;
 		}
 		
-
-
 		public override void _Ready()
 		{
 			if (backupNode is null)
@@ -108,17 +106,9 @@ namespace Hopper.View.Animations
 
 		public void SkipAnimations()
 		{
-			GetOrNull(NodeIndex.Movement)?.StopMovement();
-			GetOrNull(NodeIndex.Attack)?.StopAttack();
+			GetOrNull(NodeIndex.Movement)?.StopAnim();
+			GetOrNull(NodeIndex.Attack)?.StopAnim();
 			GetOrNull(NodeIndex.GetHit)?.StopAnim();
-		}
-
-		public void Move(Vector2 destination, MovementAnim.EMovementType movementType)
-		{
-			var movementAnim = GetLazy(NodeIndex.Movement);
-
-			movementAnim.StartMovement(actualPosition, destination, movementType);
-			actualPosition = destination;
 		}
 
 		public void SetIdle()
@@ -137,26 +127,6 @@ namespace Hopper.View.Animations
 			// TODO: lazy load texture from backup
 
 			entitySprite.Texture = TelegraphTexture;
-		}
-
-		public void Attack(Vector2 targetPos)
-		{
-			SetIdle();
-
-			var movementAnim = GetLazy(NodeIndex.Movement);
-			var attackAnim   = GetLazy(NodeIndex.Attack);
-			
-			movementAnim.LookAt(targetPos);
-
-			attackAnim.SetDirection(movementAnim.isLookingRight);
-			attackAnim.StartAttack(targetPos);
-		}
-
-		public void GetHit()
-		{
-			var getHitAnim = GetLazy(NodeIndex.GetHit);
-			
-			getHitAnim.StartAnim();
 		}
 
 		public void DeleteEntity()

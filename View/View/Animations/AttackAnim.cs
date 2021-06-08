@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using Godot;
+using Hopper.Core.Components;
 
 
 namespace Hopper.View.Animations
 {
-    public class AttackAnim : Animator
+    public class AttackAnim : Animator, IComponent
     {
         private Sprite slashSprite;
-        private EntityAnimator parent;
         public float Peak = 1f;
         public bool isLookingRight = true;
         
@@ -26,21 +25,21 @@ namespace Hopper.View.Animations
         //         CycleAttack();
         // }
 
-        public void InitAnimator(EntityAnimator parent, Sprite slashSprite)
+        public override void InitAnimator(EntityAnimator entityAnimator)
         {
-            this.parent = parent;
-            this.slashSprite = slashSprite;
+            slashSprite = entityAnimator.GetLazy(EntityAnimator.NodeIndex.Slash);
         }
 
-        public void SetupAttack(Vector2 targetPos)
+        public void SetupAnim(Vector2 targetPos)
         {
             slashSprite.Position = targetPos;
             StartAnim();
         }
         
-        
         public override void CycleAnim()
         {
+            base.CycleAnim();
+            
             var time = GetElapsed();
             
             if (time > Duration)
@@ -50,10 +49,10 @@ namespace Hopper.View.Animations
             }
 
             // TODO: deal with these casts
-            slashSprite.SelfModulate = new Color(1, 1, 1, Helper.SquareInterpolation(Peak, (float)Duration, (float)time));
+            slashSprite.SelfModulate = new Color(1, 1, 1, Helper.SquareInterpolation(Peak, Duration, time));
         }
-
-        protected override void StopAnim()
+        
+        public override void StopAnim()
         {
             base.StopAnim();
             slashSprite.SelfModulate = new Color(1, 1, 1, 0);
