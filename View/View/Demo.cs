@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Linq;
 using Hopper.Core;
 using Hopper.Core.Mods;
@@ -89,4 +89,4 @@ namespace Hopper.View
             // TODO: Making the GC run here would be a good idea to avoid stutterings while the game is going.
         }
     }
-}
+}*/
