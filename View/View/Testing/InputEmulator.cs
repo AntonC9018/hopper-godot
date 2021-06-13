@@ -5,11 +5,6 @@ namespace Hopper.View.Testing
 {
 	public class InputEmulator : Node2D
 	{
-		// Declare member variables here. Examples:
-		// private int a = 2;
-		// private string b = "text";
-
-		// Called when the node enters the scene tree for the first time.
 		private EntityAnimator entityAnimator;
 		
 		public override void _Ready()

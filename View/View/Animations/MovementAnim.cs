@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using Godot;
+using Hopper.Core;
 using Hopper.Core.Components;
+using Hopper.Shared.Attributes;
+using Hopper.TestContent.SlidingNS;
+using Hopper.Utils.Vector;
+using Hopper.View.Utils;
+using Vector2 = Godot.Vector2;
 
 namespace Hopper.View.Animations
 {
-    public class MovementAnim : Animator, IComponent
+    public partial class MovementAnim : Animator, IComponent
     {
         public enum EMovementType
         {
@@ -40,7 +46,8 @@ namespace Hopper.View.Animations
         
         public override void InitAnimator(EntityAnimator entityAnimator)
         {
-            entitySprite = entityAnimator.GetLazy(EntityAnimator.NodeIndex.Entity);
+            entitySprite = entityAnimator.entitySprite;
+            destPos = entityAnimator.actualPosition;
         }
 
         public void SetupAnim(Vector2 source, Vector2 destination, EMovementType eMovementType)
@@ -63,26 +70,15 @@ namespace Hopper.View.Animations
             StartAnim();
         }
 
-        public void SetupWalk(Vector2 source, Vector2 destination)
+        [Shared.Attributes.Export(Chain = "Displaceable.After")]
+        public void SetupMove(Entity actor, IntVector2 newPosition)
         {
             StopAnim();
             
-            startPos = entitySprite.Position = source; 
-            destPos = destination;
-            
-            eMovementType = EMovementType.Walk;
-            
-            StartAnim();
-        }
+            startPos = destPos; 
+            destPos = newPosition.ToSceneVector();
 
-        public void SetupSlide(Vector2 source, Vector2 destination)
-        {
-            StopAnim();
-
-            startPos = entitySprite.Position = source; 
-            destPos = destination;
-            
-            eMovementType = EMovementType.Slide;
+            eMovementType = actor.HasSlidingEntityModifier() ? EMovementType.Slide : EMovementType.Walk;
             
             StartAnim();
         }

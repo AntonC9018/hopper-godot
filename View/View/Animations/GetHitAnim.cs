@@ -3,7 +3,7 @@ using Hopper.Core.Components;
 
 namespace Hopper.View.Animations
 {
-    public class GetHitAnim : Animator, IComponent
+    public partial class GetHitAnim : Animator, IComponent
     {
         private Sprite entitySprite;
         
@@ -27,9 +27,10 @@ namespace Hopper.View.Animations
         
         public override void InitAnimator(EntityAnimator entityAnimator)
         {
-            entitySprite = entityAnimator.GetLazy(EntityAnimator.NodeIndex.Entity);
+            entitySprite = entityAnimator.entitySprite;
         }
 
+        [Shared.Attributes.Export(Chain = "Attackable.Do")]
         public void SetupAnim()
         {
             StopAnim();

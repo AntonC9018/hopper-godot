@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Linq;
 using Godot;
 using Hopper.Core.Components;
+using Hopper.Core.Targeting;
+using Hopper.View.Utils;
+using Transform = Hopper.Core.WorldNS.Transform;
 
 
 namespace Hopper.View.Animations
 {
-    public class AttackAnim : Animator, IComponent
+    public partial class AttackAnim : Animator, IComponent
     {
         private Sprite slashSprite;
         public float Peak = 1f;
@@ -27,11 +31,14 @@ namespace Hopper.View.Animations
 
         public override void InitAnimator(EntityAnimator entityAnimator)
         {
-            slashSprite = entityAnimator.GetLazy(EntityAnimator.NodeIndex.Slash);
+            slashSprite = entityAnimator.slashSprite;
         }
 
-        public void SetupAnim(Vector2 targetPos)
+        [Shared.Attributes.Export(Chain = "Attacking.Do")]
+        public void SetupAnim(AttackTargetingContext targetingContext)
         {
+            // there's usually only one target per attack, for now at least
+            var targetPos = targetingContext.targetContexts.First().position.ToSceneVector();
             StopAnim();
             slashSprite.Position = targetPos;
             StartAnim();
@@ -49,7 +56,6 @@ namespace Hopper.View.Animations
                 return;
             }
 
-            // TODO: deal with these casts
             slashSprite.SelfModulate = new Color(1, 1, 1, Helper.SquareInterpolation(Peak, Duration, time));
         }
         
