@@ -45,13 +45,13 @@ namespace Hopper.View.Animations
         */
         
         [Shared.Attributes.Export(Chain = "Displaceable.After")]
-        public void SetupMove(Entity actor, EntityAnimator entityAnimator, IntVector2 newPosition)
+        public void SetupMove(Entity actor, EntityAnimator entityAnimator, IntVector2 initialPosition, IntVector2 newPosition)
         {
             StopAnim();
 
             entitySprite = entityAnimator.entitySprite;
             
-            startPos = destPos; 
+            startPos = initialPosition.ToSceneVector();
             destPos = newPosition.ToSceneVector();
 
             eMovementType = actor.HasSlidingEntityModifier() ? EMovementType.Slide : EMovementType.Walk;
