@@ -44,36 +44,12 @@ namespace Hopper.View.Animations
         }
         */
         
-        public override void InitAnimator(EntityAnimator entityAnimator)
-        {
-            entitySprite = entityAnimator.entitySprite;
-            destPos = entityAnimator.actualPosition;
-        }
-
-        public void SetupAnim(Vector2 source, Vector2 destination, EMovementType eMovementType)
-        {
-            startPos = entitySprite.Position = source; 
-            destPos = eMovementType == EMovementType.Jump ? source : destination;    // set destination equal to source if jumping
-
-            if (eMovementType != EMovementType.Jump && Mathf.Abs(destPos.x - startPos.x) > 10)
-            {
-                isLookingRight = entitySprite.Scale.x > 0;
-
-                bool isMovingRight = destPos.x - startPos.x > 0;
-
-                if (isLookingRight != isMovingRight)
-                    FlipEntity();
-            }
-            
-            this.eMovementType = eMovementType;
-            
-            StartAnim();
-        }
-
         [Shared.Attributes.Export(Chain = "Displaceable.After")]
-        public void SetupMove(Entity actor, IntVector2 newPosition)
+        public void SetupMove(Entity actor, EntityAnimator entityAnimator, IntVector2 newPosition)
         {
             StopAnim();
+
+            entitySprite = entityAnimator.entitySprite;
             
             startPos = destPos; 
             destPos = newPosition.ToSceneVector();
@@ -134,9 +110,15 @@ namespace Hopper.View.Animations
         public override void StopAnim()
         {
             base.StopAnim();
+            
+            if (entitySprite is null)
+                return;
+            
             entitySprite.Position = destPos;
         }
-
+        
+        
+        // TODO: implement these
         public void FlipEntity()
         {
             entitySprite.Scale = new Vector2(-entitySprite.Scale.x, entitySprite.Scale.y);

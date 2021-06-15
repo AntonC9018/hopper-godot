@@ -22,10 +22,7 @@ namespace Hopper.View.Animations
         {
             AnimStopwatch.Start();
         }
-
-        // use this to get whatever assets you need from the entityAnimator
-        public abstract void InitAnimator(EntityAnimator entityAnimator);
-
+        
         protected virtual void StartAnim()
         {
             isRunning = true;

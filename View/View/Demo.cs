@@ -12,8 +12,12 @@ using World = Hopper.Core.WorldNS.World;
 
 namespace Hopper.View
 {
-    public class Demo
+    public class Demo : Node
     {
+        [Export] public static Node PrefabNode { get; set; }
+        [Export] public static TileMap TileMap { get; set; }
+
+        // rename to override _Ready
         public static void Start()
         {
             // Setup all mods
@@ -30,9 +34,10 @@ namespace Hopper.View
             // but it would currently not work if the View defined any logic entity types.
 
             // This you'll have to get yourself
-            var entityNodesInPrefabScene = Enumerable.Empty<Godot.Node>();
 
-            foreach (var node in entityNodesInPrefabScene)
+            var entityNodesInPrefabScene = PrefabNode.GetChildren();
+
+            foreach (Node node in entityNodesInPrefabScene)
             {
                 if (!Registry.Global.EntityFactory.TryGetByName(node.Name, out var factory))
                 {
@@ -44,30 +49,21 @@ namespace Hopper.View
                 // and inherited from IComponent.
                 // You supposedly do not need to do anything with this `animator` anymore.
                 // Certainly not switch on the node you got, that would be ridiculous.
-                var animator = Animations.EntityAnimator.AddTo(factory, node);
+                Animations.EntityAnimator.AddTo(factory, node);
 
                 var subject = factory.subject;
 
                 if (subject.HasAttacking() && node.HasNode(EntityAnimator.SpritePath.Slash))
-                {
-                    var attackAnim = AttackAnim.AddTo(subject);
-                    attackAnim.InitAnimator(animator);
-                }
+                    AttackAnim.AddTo(subject);
 
                 if (subject.HasAttackable() && node.HasNode(EntityAnimator.SpritePath.Entity))
                     // last check is kinda redundant as each entity must have an entity sprite
-                {
-                    var getHitAnim = GetHitAnim.AddTo(subject);
-                    getHitAnim.InitAnimator(animator);
-                }
+                    GetHitAnim.AddTo(subject);
 
                 if (subject.TryGetTransform(out var transform) && !transform.layer.HasFlag(Layers.WALL)
-                    &&node.HasNode(EntityAnimator.SpritePath.Entity))
+                                                               && node.HasNode(EntityAnimator.SpritePath.Entity))
                     // again, redundant last check
-                {
-                    var movementAnim = MovementAnim.AddTo(subject);
-                    movementAnim.InitAnimator(animator);
-                }
+                    MovementAnim.AddTo(subject);
             }
 
             // Now that we have set up the registry we can create an empty world.
@@ -85,7 +81,8 @@ namespace Hopper.View
             // Make sure, though, that the world is of correct dimensions, 
             // since that function fills up the already existing world!
             // Also, the world is not cleared, so the zombie from before will remain in it!
-            // tileMap.InstantiateEntities_ForTilesRepresentingEntityTypes();
+
+            TileMap.InstantiateEntities_ForTilesRepresentingEntityTypes();
 
             // To do an iteration in the logic, do Loop()
             world.Loop();

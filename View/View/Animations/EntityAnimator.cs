@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using Hopper.Core;
 using Hopper.Core.Components;
 using Hopper.Shared.Attributes;
 
@@ -13,16 +14,13 @@ namespace Hopper.View.Animations
 		public struct SpritePath
 		{
 			public static NodePath Entity = new NodePath("EntitySprite");
+			public static NodePath Telegraph = new NodePath("TelegraphSprite");
 			public static NodePath Slash = new NodePath("SlashSprite");
 		}
 
-		[Godot.Export]
-		private Texture IdleTexture { get; set; }
-		
-		[Godot.Export]
-		private Texture TelegraphTexture { get; set; }
+		public Texture idleTexture;
+		public Texture telegraphTexture;
 
-		// load these things
 		public Sprite entitySprite;
 		public Sprite slashSprite;
 		
@@ -34,26 +32,41 @@ namespace Hopper.View.Animations
 		// TODO: ya kinda need to update this after each movement
 		public Vector2 actualPosition;
 
-		public override void _Ready()
+		// do keep in mind this node should be a editor-defined prefab, as this constructor removes the redundant sprite
+		public EntityAnimator(Node prefabNode)
 		{
-			// if (backupNode is null)
-			// {
-			// 	backupNode = instanceNode.GetParent().FindNode("BackupNode");
-			// 	GD.Print("Loaded backup node " + backupNode.Name);
-			// }
+			instanceNode = prefabNode;
+			
+			entitySprite = (Sprite) instanceNode.GetNodeOrNull(SpritePath.Entity);
+			slashSprite = (Sprite) instanceNode.GetNodeOrNull(SpritePath.Slash);
+			var telegraphSprite = (Sprite) instanceNode.GetNodeOrNull(SpritePath.Telegraph);
 
+			idleTexture = entitySprite.Texture;
+			telegraphTexture = telegraphSprite.Texture;
+			telegraphSprite.QueueFree();
+			
+			// we're basically using the telegraph sprite as a proxy to get the texture
+		}
+		
+		public EntityAnimator(EntityAnimator copy)
+		{
+			idleTexture = copy.idleTexture;
+			telegraphTexture = copy.telegraphTexture;
+
+			instanceNode = copy.instanceNode.Duplicate();
+			
 			entitySprite = (Sprite) instanceNode.GetNodeOrNull(SpritePath.Entity);
 			slashSprite = (Sprite) instanceNode.GetNodeOrNull(SpritePath.Slash);
 		}
 
 		public void SetIdle()
 		{
-			entitySprite.Texture = IdleTexture;
+			entitySprite.Texture = idleTexture;
 		}
 
 		public void SetTelegraph()
 		{
-			entitySprite.Texture = TelegraphTexture;
+			entitySprite.Texture = telegraphTexture;
 		}
 		
 		public void DeleteEntity()

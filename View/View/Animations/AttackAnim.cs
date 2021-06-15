@@ -29,17 +29,15 @@ namespace Hopper.View.Animations
         //         CycleAttack();
         // }
 
-        public override void InitAnimator(EntityAnimator entityAnimator)
-        {
-            slashSprite = entityAnimator.slashSprite;
-        }
-
         [Shared.Attributes.Export(Chain = "Attacking.Do")]
-        public void SetupAnim(AttackTargetingContext targetingContext)
+        public void SetupAnim(EntityAnimator entityAnimator, AttackTargetingContext targetingContext)
         {
+            StopAnim();
+            slashSprite = entityAnimator.slashSprite;
+
             // there's usually only one target per attack, for now at least
             var targetPos = targetingContext.targetContexts.First().position.ToSceneVector();
-            StopAnim();
+
             slashSprite.Position = targetPos;
             StartAnim();
         }
@@ -62,11 +60,15 @@ namespace Hopper.View.Animations
         public override void StopAnim()
         {
             base.StopAnim();
+            
+            if (slashSprite is null)
+                return;
+            
             slashSprite.SelfModulate = new Color(1, 1, 1, 0);
         }
         
         
-        // TODO: probably get rid of these
+        // TODO: implement these
         public void FlipEntity()
         {
             slashSprite.Scale = new Vector2(-slashSprite.Scale.x, slashSprite.Scale.y);

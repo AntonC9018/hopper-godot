@@ -25,15 +25,13 @@ namespace Hopper.View.Animations
         }
         */
         
-        public override void InitAnimator(EntityAnimator entityAnimator)
-        {
-            entitySprite = entityAnimator.entitySprite;
-        }
-
         [Shared.Attributes.Export(Chain = "Attackable.Do")]
-        public void SetupAnim()
+        public void SetupAnim(EntityAnimator entityAnimator)
         {
             StopAnim();
+
+            entitySprite = entityAnimator.entitySprite;
+            
             StartAnim();
         }
         
@@ -55,6 +53,10 @@ namespace Hopper.View.Animations
         public override void StopAnim()
         {
             base.StopAnim();
+            
+            if (entitySprite is null)
+                return;
+            
             entitySprite.SelfModulate = new Color(1, 1, 1, 1);
         }
     }
