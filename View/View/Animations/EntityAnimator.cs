@@ -29,9 +29,6 @@ namespace Hopper.View.Animations
 		[Inject]
 		public Node instanceNode;
 
-		// TODO: ya kinda need to update this after each movement
-		public Vector2 actualPosition;
-
 		// do keep in mind this node should be a editor-defined prefab, as this constructor removes the redundant sprite
 		public EntityAnimator(Node prefabNode)
 		{
