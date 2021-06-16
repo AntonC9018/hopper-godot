@@ -38,9 +38,9 @@ namespace Hopper.View.Animations
 			slashSprite = (Sprite) instanceNode.GetNodeOrNull(SpritePath.Slash);
 			var telegraphSprite = (Sprite) instanceNode.GetNodeOrNull(SpritePath.Telegraph);
 
-			idleTexture = entitySprite.Texture;
-			telegraphTexture = telegraphSprite.Texture;
-			telegraphSprite.QueueFree();
+			idleTexture = entitySprite?.Texture;
+			telegraphTexture = telegraphSprite?.Texture;
+			telegraphSprite?.QueueFree();
 			
 			// we're basically using the telegraph sprite as a proxy to get the texture
 		}

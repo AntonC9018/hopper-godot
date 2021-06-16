@@ -45,6 +45,7 @@ namespace Hopper.View
 				{
 #if DEBUG
 					Console.WriteLine($"Ignoring {className} since it did not match any entity factories in the registry.");
+					Godot.GD.Print($"Ignoring {className} since it did not match any entity factories in the registry.");
 #endif
 					continue;
 				}

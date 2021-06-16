@@ -131,7 +131,7 @@ namespace Hopper.View.Animations
                 FlipEntity();
         }
 
-        public new void LookAt(Vector2 direction)
+        public void LookAt(Vector2 direction)
         {
             LookAt(GetRelativeDirection(direction));
         }

@@ -26,16 +26,15 @@ namespace Hopper.View
             {
                 if (playerControllable is null)
                 {
-                    playerEntity = Registry.Global.Queries.Faction.Get(Faction.Player)
-                        .First();
+                    var allPlayers = Registry.Global.Queries.Faction.Get(Faction.Player);
+                    
+                    if (allPlayers.Any())
+                        playerEntity = allPlayers?.First();
 
-                    playerControllable = playerEntity.GetControllable();
+                    playerControllable = playerEntity?.GetControllable();
                 }
                 
-                if (playerControllable is null)
-                    return;
-
-                playerControllable.SelectVectorAction(playerEntity, keybinds[eventKey.Scancode]);
+                playerControllable?.SelectVectorAction(playerEntity, keybinds[eventKey.Scancode]);
             }
         }
     }
