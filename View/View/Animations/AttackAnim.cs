@@ -29,7 +29,7 @@ namespace Hopper.View.Animations
         //         CycleAttack();
         // }
 
-        [Shared.Attributes.Export(Chain = "Attacking.Do")]
+        [Shared.Attributes.Export(Chain = "Attacking.After")]
         public void SetupAnim(EntityAnimator entityAnimator, AttackTargetingContext targetingContext)
         {
             StopAnim();

@@ -25,7 +25,8 @@ namespace Hopper.View.Animations
         }
         */
         
-        [Shared.Attributes.Export(Chain = "Attackable.Do")]
+        // If it's blinking, it should be applied/removed when invincibility is applied/removed
+        [Shared.Attributes.Export(Chain = "Attackable.After")]
         public void SetupAnim(EntityAnimator entityAnimator)
         {
             StopAnim();

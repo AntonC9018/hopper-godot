@@ -29,9 +29,10 @@ namespace Hopper.View
                     var allPlayers = Registry.Global.Queries.Faction.Get(Faction.Player);
                     
                     if (allPlayers.Any())
-                        playerEntity = allPlayers?.First();
-
-                    playerControllable = playerEntity?.GetControllable();
+                    {
+                        playerEntity = allPlayers.First();
+                        playerEntity.TryGetControllable(out playerControllable);
+                    }
                 }
                 
                 playerControllable?.SelectVectorAction(playerEntity, keybinds[eventKey.Scancode]);
