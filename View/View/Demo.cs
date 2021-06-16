@@ -14,12 +14,17 @@ namespace Hopper.View
 {
     public class Demo : Node
     {
-        [Export] public static Node PrefabNode { get; set; }
-        [Export] public static TileMap TileMap { get; set; }
+        [Export] public NodePath PrefabNodePath { get; set; }
+        [Export] public NodePath TileMapPath { get; set; }
 
-        // rename to override _Ready
-        public static void Start()
+        public Node PrefabNode;
+        public TileMap TileMap;
+
+        public override void _Ready()
         {
+            PrefabNode = GetNode(PrefabNodePath);
+            TileMap = (TileMap) GetNode(TileMapPath);
+            
             // Setup all mods
             var loader = new ModLoader();
             loader.Add(Hopper.Core.Main.Init);
@@ -82,7 +87,7 @@ namespace Hopper.View
             // since that function fills up the already existing world!
             // Also, the world is not cleared, so the zombie from before will remain in it!
 
-            TileMap.InstantiateEntities_ForTilesRepresentingEntityTypes();
+            // TileMap.InstantiateEntities_ForTilesRepresentingEntityTypes();
 
             // To do an iteration in the logic, do Loop()
             world.Loop();
