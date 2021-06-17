@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Images/Enemies/Bomber.png" type="Texture" id=1]
+[ext_resource path="res://Images/Enemies/bomber.png" type="Texture" id=1]
 
 [node name="Bomber" type="Node2D"]
 

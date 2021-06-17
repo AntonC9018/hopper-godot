@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RobotSummon_a.png-f6eb0395059fb286b7699eb7b338a6fb.stex"
+path="res://.import/robot_summon_a.png-145cd407c305b0f75611aaf3cedbc8fc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Enemies/RobotSummon_a.png"
-dest_files=[ "res://.import/RobotSummon_a.png-f6eb0395059fb286b7699eb7b338a6fb.stex" ]
+source_file="res://Images/Enemies/robot_summon_a.png"
+dest_files=[ "res://.import/robot_summon_a.png-145cd407c305b0f75611aaf3cedbc8fc.stex" ]
 
 [params]
 
