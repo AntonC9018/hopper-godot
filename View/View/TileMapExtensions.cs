@@ -9,6 +9,12 @@ namespace Hopper.View
 {
 	public static class TileMapExtensions
 	{
+        public static World CreateWorldOfSameSize(this Godot.TileMap tileMap)
+        {
+            var size = tileMap.CellSize.Convert();
+            return new World(size.x, size.y);
+        }
+
 		/// <summary>
 		///
 		/// Instantiates an entity for each tiles in the tilemap which represents a logical entity.

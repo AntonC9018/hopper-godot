@@ -29,15 +29,15 @@ tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 
 [node name="Prefabs" type="Node2D" parent="."]
 visible = false
 
-[node name="RobotSummon" parent="Prefabs" instance=ExtResource( 7 )]
+[node name="robot_summon" parent="Prefabs" instance=ExtResource( 7 )]
 
-[node name="Robot" parent="Prefabs" instance=ExtResource( 4 )]
+[node name="robot" parent="Prefabs" instance=ExtResource( 4 )]
 
-[node name="Bomber" parent="Prefabs" instance=ExtResource( 5 )]
+[node name="bomber" parent="Prefabs" instance=ExtResource( 5 )]
 
-[node name="Wall" parent="Prefabs" instance=ExtResource( 9 )]
+[node name="wall" parent="Prefabs" instance=ExtResource( 9 )]
 
-[node name="Zombie" parent="Prefabs" instance=ExtResource( 8 )]
+[node name="zombie" parent="Prefabs" instance=ExtResource( 8 )]
 
 [node name="Demo" type="Node" parent="."]
 script = ExtResource( 3 )
