@@ -7,6 +7,7 @@ using Hopper.Shared.Attributes;
 using Hopper.TestContent.SlidingNS;
 using Hopper.Utils.Vector;
 using Hopper.View.Utils;
+using Transform = Hopper.Core.WorldNS.Transform;
 using Vector2 = Godot.Vector2;
 
 namespace Hopper.View.Animations
@@ -44,8 +45,8 @@ namespace Hopper.View.Animations
         }
         */
         
-        [Shared.Attributes.Export(Chain = "Displaceable.After")]
-        public void SetupMove(Entity actor, EntityAnimator entityAnimator, IntVector2 initialPosition, IntVector2 newPosition)
+        [Shared.Attributes.Export(Chain = "Displaceable.After", Dynamic = true)]
+        public void SetupAnim(Entity actor, EntityAnimator entityAnimator, IntVector2 initialPosition, IntVector2 newPosition)
         {
             StopAnim();
 
@@ -144,6 +145,11 @@ namespace Hopper.View.Animations
                 return isLookingRight;
             
             return direction.x - entitySprite.Position.x > 0;
+        }
+        
+        public void DefaultPreset(Hopper.Core.Entity subject)
+        {
+            SetupAnimHandlerWrapper.HookTo(subject);
         }
     }
 }

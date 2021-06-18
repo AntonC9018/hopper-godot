@@ -58,14 +58,16 @@ namespace Hopper.View
 
                 if (subject.HasAttacking() && node.HasNode(EntityAnimator.SpritePath.Slash))
                 {
-                    AttackAnim.AddTo(subject);
+                    AttackAnim.AddTo(subject)
+                        .DefaultPreset(subject);
                     GD.Print("    AttackAnim");
                 }
 
                 if (subject.HasAttackable() && node.HasNode(EntityAnimator.SpritePath.Entity))
                     // last check is kinda redundant as each entity must have an entity sprite
                 {
-                    GetHitAnim.AddTo(subject);
+                    GetHitAnim.AddTo(subject)
+                        .DefaultPreset(subject);
                     GD.Print("    GetHitAnim");
                 }
 
@@ -73,7 +75,8 @@ namespace Hopper.View
                                                                && node.HasNode(EntityAnimator.SpritePath.Entity))
                     // again, redundant last check
                 {
-                    MovementAnim.AddTo(subject);
+                    MovementAnim.AddTo(subject)
+                        .DefaultPreset(subject);
                     GD.Print("    MovementAnim");
                 }
             }
@@ -95,7 +98,7 @@ namespace Hopper.View
 
             // Now, if we spawn an entity, we should get a sprite on the screen, assuming the animator is coded correctly.
             // world.SpawnEntity(Zombie.Factory, IntVector2.Zero, IntVector2.Right);
-            world.SpawnEntity(Player.Factory, IntVector2.Zero, IntVector2.Right);
+            world.SpawnEntity(Player.Factory, IntVector2.Right * 2, IntVector2.Right);
             
             // To do an iteration in the logic, do Loop()
             world.Loop();

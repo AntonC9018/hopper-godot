@@ -48,5 +48,6 @@ namespace Hopper.View.Animations
             if (!isRunning)
                 return;
         }
+
     }
 }

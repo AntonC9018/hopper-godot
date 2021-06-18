@@ -29,7 +29,7 @@ namespace Hopper.View.Animations
         //         CycleAttack();
         // }
 
-        [Shared.Attributes.Export(Chain = "Attacking.After")]
+        [Shared.Attributes.Export(Chain = "Attacking.After", Dynamic = true)]
         public void SetupAnim(EntityAnimator entityAnimator, AttackTargetingContext targetingContext)
         {
             StopAnim();
@@ -90,6 +90,12 @@ namespace Hopper.View.Animations
 
             if (isAttackDirRight != isLookingRight)
                 FlipEntity();
+        }
+        
+        
+        public void DefaultPreset(Hopper.Core.Entity subject)
+        {
+            SetupAnimHandlerWrapper.HookTo(subject);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Hopper.View.Animations
         */
         
         // If it's blinking, it should be applied/removed when invincibility is applied/removed
-        [Shared.Attributes.Export(Chain = "Attackable.After")]
+        [Shared.Attributes.Export(Chain = "Attackable.After", Dynamic = true)]
         public void SetupAnim(EntityAnimator entityAnimator)
         {
             StopAnim();
@@ -59,6 +59,11 @@ namespace Hopper.View.Animations
                 return;
             
             entitySprite.SelfModulate = new Color(1, 1, 1, 1);
+        }
+        
+        public void DefaultPreset(Hopper.Core.Entity subject)
+        {
+            SetupAnimHandlerWrapper.HookTo(subject);
         }
     }
 }
