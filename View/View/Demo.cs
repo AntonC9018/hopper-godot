@@ -85,7 +85,7 @@ namespace Hopper.View
             world.Loop();
         }
 
-        public void Finalize()
+        public void FinalizeLogic()
         {
             // At last, when another scene needs to be loaded, the runtime entities need to be cleared and the world wiped.
             // var world = new World(width: 10, height: 10);
