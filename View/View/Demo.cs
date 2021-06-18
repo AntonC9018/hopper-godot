@@ -20,8 +20,12 @@ namespace Hopper.View
         public Node PrefabNode;
         public TileMap TileMap;
 
+        public static Node RootNode;
+
         public override void _Ready()
         {
+            RootNode = this;
+
             PrefabNode = GetNode(PrefabNodePath);
             TileMap = (TileMap) GetNode(TileMapPath);
             
@@ -52,22 +56,32 @@ namespace Hopper.View
                 var subject = factory.subject;
 
                 if (subject.HasAttacking() && node.HasNode(EntityAnimator.SpritePath.Slash))
+                {
                     AttackAnim.AddTo(subject);
+                    GD.Print("    AttackAnim");
+                }
 
                 if (subject.HasAttackable() && node.HasNode(EntityAnimator.SpritePath.Entity))
                     // last check is kinda redundant as each entity must have an entity sprite
+                {
                     GetHitAnim.AddTo(subject);
+                    GD.Print("    GetHitAnim");
+                }
 
                 if (subject.TryGetTransform(out var transform) && !transform.layer.HasFlag(Layers.WALL)
                                                                && node.HasNode(EntityAnimator.SpritePath.Entity))
                     // again, redundant last check
+                {
                     MovementAnim.AddTo(subject);
+                    GD.Print("    MovementAnim");
+                }
             }
+
 
             // Now that we have set up the registry we can create an empty world.
             // This just creates an empty width * height world, it does not spawn anything.
-            // var world = new World(width: 10, height: 10);
-            var world = TileMap.CreateWorldOfSameSize();
+            var world = new World(width: 10, height: 10);
+            // var world = TileMap.CreateWorldOfSameSize();
 
             // We must set it globally, since all the logic in the game assumes it's global.
             // The entities do not store a reference to the world in the current code, since that's too annoying.
@@ -76,11 +90,13 @@ namespace Hopper.View
             // If we wanted to load the tilemap, call the tilemap function
             // Make sure, though, that the world is of correct dimensions, 
             // since that function fills up the already existing world!
-            TileMap.InstantiateEntities_ForTilesRepresentingEntityTypes();
+            // TileMap.InstantiateEntities_ForTilesRepresentingEntityTypes();
 
             // Now, if we spawn an entity, we should get a sprite on the screen, assuming the animator is coded correctly.
             // world.SpawnEntity(Zombie.Factory, IntVector2.Zero, IntVector2.Right);
-
+            world.SpawnEntity(Player.Factory, IntVector2.Zero, IntVector2.Right);
+            world.SpawnEntity(Player.Factory, IntVector2.Zero, IntVector2.Right);
+            
             // To do an iteration in the logic, do Loop()
             world.Loop();
         }
