@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RobotSummon.png-3442abe0bba384f5025773672aa8333e.stex"
+path="res://.import/water_tile.png-8ee4490fa303021ad0b817438de5ecf3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Enemies/RobotSummon.png"
-dest_files=[ "res://.import/RobotSummon.png-3442abe0bba384f5025773672aa8333e.stex" ]
+source_file="res://Images/water_tile.png"
+dest_files=[ "res://.import/water_tile.png-8ee4490fa303021ad0b817438de5ecf3.stex" ]
 
 [params]
 

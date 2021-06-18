@@ -1,17 +1,16 @@
-﻿using System.Diagnostics;
-using Godot;
+﻿using Godot;
+using Hopper.Core.Components;
 
 namespace Hopper.View.Animations
 {
-    public class GetHitAnim : Node2D
+    public partial class GetHitAnim : Animator, IComponent
     {
-        private Stopwatch animStopwatch = new Stopwatch();
         private Sprite entitySprite;
-        private bool isRunning;
         
-        public float Duration = 0.33f;
         public float Peak = 1f;
         
+        // TODO: replace this
+        /*
         public override void _Ready()
         {
             var parent = (EntityAnimator)GetParent();
@@ -24,22 +23,24 @@ namespace Hopper.View.Animations
             if (isRunning)
                 CycleAttack();
         }
-
-        public void SetEntitySprite(Sprite entitySprite)
+        */
+        
+        // If it's blinking, it should be applied/removed when invincibility is applied/removed
+        [Shared.Attributes.Export(Chain = "Attackable.After")]
+        public void SetupAnim(EntityAnimator entityAnimator)
         {
-            this.entitySprite = entitySprite;
+            StopAnim();
+
+            entitySprite = entityAnimator.entitySprite;
+            
+            StartAnim();
         }
-
-        public void StartAnim()
+        
+        public override void CycleAnim()
         {
-            animStopwatch.Reset();
-            animStopwatch.Start();
-            isRunning = true;
-        }
+            base.CycleAnim();
 
-        private void CycleAttack()
-        {
-            var time = (float) animStopwatch.ElapsedTicks / Stopwatch.Frequency;
+            var time = GetElapsed();
             
             if (time > Duration)
             {
@@ -47,15 +48,16 @@ namespace Hopper.View.Animations
                 return;
             }
 
-
             entitySprite.SelfModulate = new Color(1, 1, 1, 1 - Helper.SquareInterpolation(Peak, Duration, time));
         }
 
-        public void StopAnim()
+        public override void StopAnim()
         {
-            animStopwatch.Stop();
-            animStopwatch.Reset();
-            isRunning = false;
+            base.StopAnim();
+            
+            if (entitySprite is null)
+                return;
+            
             entitySprite.SelfModulate = new Color(1, 1, 1, 1);
         }
     }

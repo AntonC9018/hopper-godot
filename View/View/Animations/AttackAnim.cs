@@ -1,68 +1,74 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Linq;
 using Godot;
+using Hopper.Core.Components;
+using Hopper.Core.Targeting;
+using Hopper.View.Utils;
+using Transform = Hopper.Core.WorldNS.Transform;
 
 
 namespace Hopper.View.Animations
 {
-    public class AttackAnim : Node2D
+    public partial class AttackAnim : Animator, IComponent
     {
-        private Stopwatch animStopwatch = new Stopwatch();
         private Sprite slashSprite;
-        private bool isRunning;
-        
-        public float Duration = 0.33f;
         public float Peak = 1f;
         public bool isLookingRight = true;
+        
 
-        public override void _Ready()
-        {
-            var parent = (EntityAnimator)GetParent();
-            SetSlashSprite(parent.GetLazy<Sprite>(EntityAnimator.NodeIndex.Slash));
-        }
+        // TODO: replace this stuff
+        // public override void _Ready()
+        // {
+        //     var parent = (EntityAnimator)GetParent();
+        //     SetSlashSprite(parent.GetLazy<Sprite>(EntityAnimator.NodeIndex.Slash));
+        // }
+        //
+        // public override void _Process(float delta)
+        // {
+        //     if (isRunning)
+        //         CycleAttack();
+        // }
 
-        public override void _Process(float delta)
+        [Shared.Attributes.Export(Chain = "Attacking.After")]
+        public void SetupAnim(EntityAnimator entityAnimator, AttackTargetingContext targetingContext)
         {
-            if (isRunning)
-                CycleAttack();
-        }
+            StopAnim();
+            slashSprite = entityAnimator.slashSprite;
 
-        public void SetSlashSprite(Sprite slashSprite)
-        {
-            this.slashSprite = slashSprite;
-        }
+            // there's usually only one target per attack, for now at least
+            var targetPos = targetingContext.targetContexts.First().position.ToSceneVector();
 
-        public void StartAttack(Vector2 targetPos)
-        {
             slashSprite.Position = targetPos;
-            
-            animStopwatch.Reset();
-            animStopwatch.Start();
-            isRunning = true;
+            StartAnim();
         }
-
-        private void CycleAttack()
+        
+        public override void CycleAnim()
         {
-            var time = (float) animStopwatch.ElapsedTicks / Stopwatch.Frequency;
+            base.CycleAnim();
+            
+            var time = GetElapsed();
             
             if (time > Duration)
             {
-                StopAttack();
+                StopAnim();
                 return;
             }
 
-
             slashSprite.SelfModulate = new Color(1, 1, 1, Helper.SquareInterpolation(Peak, Duration, time));
         }
-
-        public void StopAttack()
+        
+        public override void StopAnim()
         {
-            animStopwatch.Stop();
-            animStopwatch.Reset();
-            isRunning = false;
+            base.StopAnim();
+            
+            if (slashSprite is null)
+                return;
+            
             slashSprite.SelfModulate = new Color(1, 1, 1, 0);
         }
         
+        
+        // TODO: implement these
         public void FlipEntity()
         {
             slashSprite.Scale = new Vector2(-slashSprite.Scale.x, slashSprite.Scale.y);

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Zombie_a.png-48cd28ddb956451a833d2526b59f5d2a.stex"
+path="res://.import/zombie_a.png-f5504a5f33f7924460f1bb484858ccaa.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Enemies/Zombie_a.png"
-dest_files=[ "res://.import/Zombie_a.png-48cd28ddb956451a833d2526b59f5d2a.stex" ]
+source_file="res://Images/Enemies/zombie_a.png"
+dest_files=[ "res://.import/zombie_a.png-f5504a5f33f7924460f1bb484858ccaa.stex" ]
 
 [params]
 

@@ -1,10 +1,17 @@
 ﻿using System;
-using Godot;
 using System.Diagnostics;
+using Godot;
+using Hopper.Core;
+using Hopper.Core.Components;
+using Hopper.Shared.Attributes;
+using Hopper.TestContent.SlidingNS;
+using Hopper.Utils.Vector;
+using Hopper.View.Utils;
+using Vector2 = Godot.Vector2;
 
 namespace Hopper.View.Animations
 {
-    public class MovementAnim : Node
+    public partial class MovementAnim : Animator, IComponent
     {
         public enum EMovementType
         {
@@ -13,19 +20,16 @@ namespace Hopper.View.Animations
             Slide
         }
         
-        private Stopwatch animStopwatch = new Stopwatch();
-
         private Vector2 startPos;
         private Vector2 destPos;
-        private bool isRunning = false;
-        private Node2D spriteNode;
+        private Sprite entitySprite;
         private EMovementType eMovementType;
 
-        public static float Duration = 0.33f;
         public static float Peak = -25f;
         public bool isLookingRight = true;
 
-        
+        // TODO: replace this
+        /*
         public override void _Ready()
         {
             var parent = (EntityAnimator)GetParent();
@@ -38,41 +42,41 @@ namespace Hopper.View.Animations
             if (isRunning)
                 CycleMovement();
         }
+        */
         
-        public void SetEntitySprite(Node2D spriteNode)
+        [Shared.Attributes.Export(Chain = "Displaceable.After")]
+        public void SetupMove(Entity actor, EntityAnimator entityAnimator, IntVector2 initialPosition, IntVector2 newPosition)
         {
-            this.spriteNode = spriteNode;
+            StopAnim();
+
+            entitySprite = entityAnimator.entitySprite;
+            
+            startPos = initialPosition.ToSceneVector();
+            destPos = newPosition.ToSceneVector();
+
+            eMovementType = actor.HasSlidingEntityModifier() ? EMovementType.Slide : EMovementType.Walk;
+            
+            StartAnim();
         }
 
-        public void StartMovement(Vector2 source, Vector2 destination, EMovementType eMovementType)
+        public void SetupJump()
         {
-            startPos = spriteNode.Position = source; 
-            destPos = eMovementType == EMovementType.Jump ? source : destination;    // set destination equal to source if jumping
+            StopAnim();
 
-            if (eMovementType != EMovementType.Jump && Mathf.Abs(destPos.x - startPos.x) > 10)
-            {
-                isLookingRight = spriteNode.Scale.x > 0;
-
-                bool isMovingRight = destPos.x - startPos.x > 0;
-
-                if (isLookingRight != isMovingRight)
-                    FlipEntity();
-            }
+            eMovementType = EMovementType.Jump;
             
-            this.eMovementType = eMovementType;
-            isRunning = true;
-            
-            animStopwatch.Reset();
-            animStopwatch.Start();
+            StartAnim();
         }
 
-        private void CycleMovement()
+        public override void CycleAnim()
         {
-            var time = (float) animStopwatch.ElapsedTicks / Stopwatch.Frequency;
+            base.CycleAnim();
+
+            var time = GetElapsed();
             
             if (time > Duration)
             {
-                StopMovement();
+                StopAnim();
                 return;
             }
 
@@ -83,14 +87,14 @@ namespace Hopper.View.Animations
 
                     walkFramePos.y += Helper.SquareInterpolation(Peak, Duration, time);    // little bit of bobbing for the jump
 
-                    spriteNode.Position = walkFramePos;
+                    entitySprite.Position = walkFramePos;
                     break;
                 
                 case EMovementType.Slide:
                     //var slideFramePos = LinearInterpolation(time);
                     var slideFramePos = Helper.LinearInterpolation(startPos, destPos, Duration, time);
                     
-                    spriteNode.Position = slideFramePos;
+                    entitySprite.Position = slideFramePos;
                     break;
                 
                 case EMovementType.Jump:
@@ -98,22 +102,26 @@ namespace Hopper.View.Animations
 
                     jumpFramePos.y += Helper.SquareInterpolation(Peak, Duration, time);    // little bit of bobbing for the jump
 
-                    spriteNode.Position = jumpFramePos;
+                    entitySprite.Position = jumpFramePos;
                     break;
             }
         }
 
-        public void StopMovement()
+        public override void StopAnim()
         {
-            animStopwatch.Stop();
-            animStopwatch.Reset();
-            isRunning = false;
-            spriteNode.Position = destPos;
+            base.StopAnim();
+            
+            if (entitySprite is null)
+                return;
+            
+            entitySprite.Position = destPos;
         }
-
+        
+        
+        // TODO: implement these
         public void FlipEntity()
         {
-            spriteNode.Scale = new Vector2(-spriteNode.Scale.x, spriteNode.Scale.y);
+            entitySprite.Scale = new Vector2(-entitySprite.Scale.x, entitySprite.Scale.y);
             isLookingRight = !isLookingRight;
         }
 
@@ -123,17 +131,17 @@ namespace Hopper.View.Animations
                 FlipEntity();
         }
 
-        public new void LookAt(Vector2 direction)
+        public void LookAt(Vector2 direction)
         {
             LookAt(GetRelativeDirection(direction));
         }
 
         public bool GetRelativeDirection(Vector2 direction)
         {
-            if (Math.Abs(direction.x - spriteNode.Position.x) < 10f)
+            if (Math.Abs(direction.x - entitySprite.Position.x) < 10f)
                 return isLookingRight;
             
-            return direction.x - spriteNode.Position.x > 0;
+            return direction.x - entitySprite.Position.x > 0;
         }
     }
 }

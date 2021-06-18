@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/WaterTile.png-83f571f5ccb41fa54712d488dd1ea73e.stex"
+path="res://.import/ice_cube.png-3f28eb33876ff10edcd6fa4b67681cb8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/WaterTile.png"
-dest_files=[ "res://.import/WaterTile.png-83f571f5ccb41fa54712d488dd1ea73e.stex" ]
+source_file="res://Images/ice_cube.png"
+dest_files=[ "res://.import/ice_cube.png-3f28eb33876ff10edcd6fa4b67681cb8.stex" ]
 
 [params]
 

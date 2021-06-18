@@ -1,7 +1,7 @@
 [gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Images/bomb.png" type="Texture" id=2]
-[ext_resource path="res://Images/candace4.png" type="Texture" id=3]
+[ext_resource path="res://Images/player.png" type="Texture" id=3]
 [ext_resource path="res://Images/beam.png" type="Texture" id=4]
 [ext_resource path="res://Images/beamx2.png" type="Texture" id=5]
 [ext_resource path="res://Images/chest.png" type="Texture" id=6]
@@ -9,16 +9,16 @@
 [ext_resource path="res://Images/droppedtestitem.png" type="Texture" id=8]
 [ext_resource path="res://Images/dirt.png" type="Texture" id=9]
 [ext_resource path="res://Images/default.png" type="Texture" id=10]
-[ext_resource path="res://Images/crate.png" type="Texture" id=11]
+[ext_resource path="res://Images/wall.png" type="Texture" id=11]
 [ext_resource path="res://Images/candace5.png" type="Texture" id=12]
 [ext_resource path="res://Images/explosion.png" type="Texture" id=13]
 [ext_resource path="res://Images/whelp.png" type="Texture" id=14]
 [ext_resource path="res://Images/head.png" type="Texture" id=15]
-[ext_resource path="res://Images/icecube.png" type="Texture" id=16]
+[ext_resource path="res://Images/ice_cube.png" type="Texture" id=16]
 [ext_resource path="res://Images/joe.png" type="Texture" id=17]
 [ext_resource path="res://Images/knipper.png" type="Texture" id=18]
 [ext_resource path="res://Images/legot.png" type="Texture" id=19]
-[ext_resource path="res://Images/player.png" type="Texture" id=20]
+[ext_resource path="res://Images/player_old.png" type="Texture" id=20]
 [ext_resource path="res://Images/projectile.png" type="Texture" id=21]
 [ext_resource path="res://Images/side_power_wall.png" type="Texture" id=22]
 [ext_resource path="res://Images/spider.png" type="Texture" id=23]
@@ -26,9 +26,17 @@
 [ext_resource path="res://Images/Tile2.png" type="Texture" id=25]
 [ext_resource path="res://Images/tile.png" type="Texture" id=26]
 [ext_resource path="res://Images/trap.png" type="Texture" id=27]
-[ext_resource path="res://Images/WaterTile.png" type="Texture" id=28]
+[ext_resource path="res://Images/water_tile.png" type="Texture" id=28]
 [ext_resource path="res://Images/cross.png" type="Texture" id=30]
 [ext_resource path="res://View/Prefabs/BackupNode.tscn" type="PackedScene" id=31]
+
+
+
+
+
+
+
+
 
 [node name="Node2D" type="Node2D"]
 
