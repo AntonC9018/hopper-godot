@@ -43,7 +43,8 @@ visible = false
 
 [node name="player" parent="Prefabs" instance=ExtResource( 10 )]
 
-[node name="Demo" type="Node" parent="."]
+[node name="Demo" type="Node2D" parent="."]
+scale = Vector2( 2, 2 )
 script = ExtResource( 3 )
 PrefabNodePath = NodePath("../Prefabs")
 TileMapPath = NodePath("../Entity TileMap")

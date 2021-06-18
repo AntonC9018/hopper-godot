@@ -57,6 +57,8 @@ namespace Hopper.View.Animations
             eMovementType = actor.HasSlidingEntityModifier() ? EMovementType.Slide : EMovementType.Walk;
             
             StartAnim();
+            
+            GD.Print("Started moving from " + initialPosition + " towards " + newPosition);
         }
 
         public void SetupJump()

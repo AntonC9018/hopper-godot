@@ -4,6 +4,7 @@ using Godot;
 using Hopper.Core;
 using Hopper.Core.ActingNS;
 using Hopper.Utils.Vector;
+using World = Hopper.Core.WorldNS.World;
 
 namespace Hopper.View
 {
@@ -36,6 +37,10 @@ namespace Hopper.View
                 }
                 
                 playerControllable?.SelectVectorAction(playerEntity, keybinds[eventKey.Scancode]);
+                
+                World.Global.Loop();
+                
+                GD.Print("Input: " + keybinds[eventKey.Scancode]);
             }
         }
     }

@@ -42,7 +42,7 @@ namespace Hopper.View
             // This logic may also be put in the BeforeInit() of Hopper.View.Main, 
             // but it would currently not work if the View defined any logic entity types.
 
-            foreach (Node node in PrefabNode.GetChildren())
+            foreach (Node2D node in PrefabNode.GetChildren())
             {
                 // The node names must be in snake_case
                 if (!Registry.Global.EntityFactory.TryGetByName(node.Name, out var factory))
@@ -52,6 +52,7 @@ namespace Hopper.View
                 }
 
                 Animations.EntityAnimator.AddTo(factory, node);
+                Animations.EntityAnimator.AddInitTo(factory);
 
                 var subject = factory.subject;
 
@@ -94,7 +95,6 @@ namespace Hopper.View
 
             // Now, if we spawn an entity, we should get a sprite on the screen, assuming the animator is coded correctly.
             // world.SpawnEntity(Zombie.Factory, IntVector2.Zero, IntVector2.Right);
-            world.SpawnEntity(Player.Factory, IntVector2.Zero, IntVector2.Right);
             world.SpawnEntity(Player.Factory, IntVector2.Zero, IntVector2.Right);
             
             // To do an iteration in the logic, do Loop()
