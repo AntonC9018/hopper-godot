@@ -45,7 +45,7 @@ namespace Hopper.View.Animations
         }
         */
         
-        [Shared.Attributes.Export(Chain = "Displaceable.After", Dynamic = true)]
+        [Hopper.Shared.Attributes.Export(Chain = "Displaceable.After", Dynamic = true)]
         public void SetupAnim(Entity actor, EntityAnimator entityAnimator, IntVector2 initialPosition, IntVector2 newPosition)
         {
             StopAnim();
@@ -151,5 +151,6 @@ namespace Hopper.View.Animations
         {
             SetupAnimHandlerWrapper.HookTo(subject);
         }
+
     }
 }

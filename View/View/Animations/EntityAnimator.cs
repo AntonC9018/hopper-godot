@@ -80,9 +80,15 @@ namespace Hopper.View.Animations
 			entitySprite.Texture = telegraphTexture;
 		}
 		
+		[Hopper.Shared.Attributes.Export(Chain = "+Entity.Death", Dynamic = true)]
 		public void DeleteEntity()
 		{
 			instanceNode.QueueFree();
+		}
+
+		public void DefaultPreset(Hopper.Core.Entity subject)
+		{
+			DeleteEntityHandlerWrapper.HookTo(subject);
 		}
 	}
 }

@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Hopper.View.Animations
 {
-    public abstract class Animator 
+    public abstract class Animator
     {
         /// <summary>
         /// Sets a base class to be used by animations, with specific optimizations included
@@ -22,7 +22,7 @@ namespace Hopper.View.Animations
         {
             AnimStopwatch.Start();
         }
-        
+
         protected virtual void StartAnim()
         {
             isRunning = true;
@@ -48,6 +48,5 @@ namespace Hopper.View.Animations
             if (!isRunning)
                 return;
         }
-
     }
 }
