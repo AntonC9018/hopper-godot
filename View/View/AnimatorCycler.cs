@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System.Collections.Generic;
+using Godot;
 using Hopper.Core;
 using Hopper.Shared.Attributes;
 using Hopper.Utils;
@@ -10,7 +11,7 @@ namespace Hopper.View
     {
         private readonly DoubleList<Animator> allAnimators;
 
-        private readonly Index<Animator>[] animatorIndices = {};
+        private readonly List<Animator> animators;
         
         public override void _Process(float delta)
         {
@@ -21,8 +22,25 @@ namespace Hopper.View
         }
 
         [Hopper.Shared.Attributes.Export(Chain = "gWorld.SpawnEntity")]
-        public void AnalyzeNewEntity(Entity entity)
+        public void AddNewEntityComponents(Entity entity)
         {
+            // TODO: replace this with some kind of collection of indices
+            if (entity.TryGetComponent(AttackAnim.Index, out var attackAnim))
+                allAnimators.AddMaybeWhileIterating(attackAnim);
+            
+            if (entity.TryGetComponent(MovementAnim.Index, out var movementAnim))
+                allAnimators.AddMaybeWhileIterating(movementAnim);
+
+            if (entity.TryGetComponent(GetHitAnim.Index, out var getHitAnim))
+            {
+                allAnimators.AddMaybeWhileIterating(getHitAnim);
+            }
+        }
+
+        [Hopper.Shared.Attributes.Export(Chain = "+Entity.Death")]
+        public void RemoveDeadEntityComponents(Entity entity)
+        {
+            // TODO: replace this with some kind of collection of indices
             if (entity.TryGetComponent(AttackAnim.Index, out var attackAnim))
                 allAnimators.AddMaybeWhileIterating(attackAnim);
             
@@ -31,10 +49,6 @@ namespace Hopper.View
             
             if (entity.TryGetComponent(GetHitAnim.Index, out var getHitAnim))
                 allAnimators.AddMaybeWhileIterating(getHitAnim);
-
-            var list = new { };
         }
-        
-        
     }
 }

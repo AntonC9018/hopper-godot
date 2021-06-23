@@ -51,7 +51,7 @@ namespace Hopper.View
                     continue;
                 }
 
-                Animations.EntityAnimator.AddTo(factory, node).DefaultPreset(factory);
+                Animations.EntityAnimator.AddTo(factory, node);
                 Animations.EntityAnimator.AddInitTo(factory);
 
                 var subject = factory.subject;
