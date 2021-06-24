@@ -74,6 +74,8 @@ namespace Hopper.View.Animations
         public override void CycleAnim()
         {
             base.CycleAnim();
+            
+            Console.WriteLine("Cycling movement");
 
             var time = GetElapsed();
             

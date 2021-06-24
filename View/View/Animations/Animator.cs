@@ -23,6 +23,12 @@ namespace Hopper.View.Animations
             AnimStopwatch.Start();
         }
 
+        public Animator()
+        {
+            AnimatorCycler.animators.Add(this);
+            Console.WriteLine("Added animator");
+        }
+
         protected virtual void StartAnim()
         {
             isRunning = true;

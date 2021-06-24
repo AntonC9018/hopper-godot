@@ -91,7 +91,7 @@ namespace Hopper.View.Animations
             if (isAttackDirRight != isLookingRight)
                 FlipEntity();
         }
-
+        
         public void DefaultPreset(Hopper.Core.Entity subject)
         {
             SetupAnimHandlerWrapper.HookTo(subject);

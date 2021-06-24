@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Images/FloorTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Images/EntityTileSet.tres" type="TileSet" id=2]
@@ -10,10 +10,12 @@
 [ext_resource path="res://View/Prefabs/Zombie.tscn" type="PackedScene" id=8]
 [ext_resource path="res://View/Prefabs/Wall.tscn" type="PackedScene" id=9]
 [ext_resource path="res://View/Prefabs/Player.tscn" type="PackedScene" id=10]
+[ext_resource path="res://View/AnimatorCycler.cs" type="Script" id=11]
 
 [node name="GameScene" type="Node2D"]
 
 [node name="Floor TileMap" type="TileMap" parent="."]
+position = Vector2( 32, 32 )
 scale = Vector2( 2, 2 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
@@ -51,3 +53,6 @@ TileMapPath = NodePath("../Entity TileMap")
 
 [node name="inputController" type="Node" parent="."]
 script = ExtResource( 6 )
+
+[node name="AnimatorCycler" type="Node" parent="."]
+script = ExtResource( 11 )

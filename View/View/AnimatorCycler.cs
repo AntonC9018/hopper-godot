@@ -11,44 +11,14 @@ namespace Hopper.View
     {
         private readonly DoubleList<Animator> allAnimators;
 
-        private readonly List<Animator> animators;
+        public static readonly List<Animator> animators = new List<Animator>();
         
         public override void _Process(float delta)
         {
-            foreach (var animator in allAnimators)
+            foreach (var animator in animators)
             {
                 animator.CycleAnim();
             }
-        }
-
-        [Hopper.Shared.Attributes.Export(Chain = "gWorld.SpawnEntity")]
-        public void AddNewEntityComponents(Entity entity)
-        {
-            // TODO: replace this with some kind of collection of indices
-            if (entity.TryGetComponent(AttackAnim.Index, out var attackAnim))
-                allAnimators.AddMaybeWhileIterating(attackAnim);
-            
-            if (entity.TryGetComponent(MovementAnim.Index, out var movementAnim))
-                allAnimators.AddMaybeWhileIterating(movementAnim);
-
-            if (entity.TryGetComponent(GetHitAnim.Index, out var getHitAnim))
-            {
-                allAnimators.AddMaybeWhileIterating(getHitAnim);
-            }
-        }
-
-        [Hopper.Shared.Attributes.Export(Chain = "+Entity.Death")]
-        public void RemoveDeadEntityComponents(Entity entity)
-        {
-            // TODO: replace this with some kind of collection of indices
-            if (entity.TryGetComponent(AttackAnim.Index, out var attackAnim))
-                allAnimators.AddMaybeWhileIterating(attackAnim);
-            
-            if (entity.TryGetComponent(MovementAnim.Index, out var movementAnim))
-                allAnimators.AddMaybeWhileIterating(movementAnim);
-            
-            if (entity.TryGetComponent(GetHitAnim.Index, out var getHitAnim))
-                allAnimators.AddMaybeWhileIterating(getHitAnim);
         }
     }
 }
